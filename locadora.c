@@ -36,7 +36,7 @@ void telaSobre(void) {
     printf("///               Departamento de Computação e Tecnologia                   ///\n");
     printf("///                  Disciplina DCT1106 -- Programação                      ///\n");
     printf("///                  Projeto Uma Locadora de Veículos                       ///\n");
-    printf("///            Developed by @rusdrael and @matheusfaria21 - Out, 2021       ///\n");
+    printf("///             Developed by @rusdrael and @matheusfaria21 - Out, 2021       ///\n");
     printf("///                                                                         ///\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                         ///\n");
@@ -98,7 +98,7 @@ void telaEquipe(void) {
     printf("///                                                                         ///\n");
     printf("///            = = = = = Uma Locadora de Veículos = = = = =                 ///\n");
     printf("///                                                                         ///\n");
-    printf("///            Este projeto foi desenvolvido por:                           ///\n");
+    printf("///            Este projeto foi desenvolvido por:                           ///\n"); 
     printf("///                                                                         ///\n");
     printf("///            Rusdrael Antony de Araújo Freire                             ///\n");
     printf("///            E-mail: antony.freire.086@ufrn.edu.br                        ///\n");
