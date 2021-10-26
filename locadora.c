@@ -70,7 +70,7 @@ void telaPrincipal(void) {
     printf("///                                                                         ///\n");
     printf("///            = = = = = Uma Locadora de Veículos = = = = =                 ///\n");
     printf("///                                                                         ///\n");
-    printf("///            1. Módulo Cliente                                            ///\n");
+    printf("///            1. Módulo Cadastrar Cliente                                  ///\n");
     printf("///            2. Módulo Administrador                                      ///\n");
     printf("///            3. Módulo Veículos Disponíveis                               ///\n");
     printf("///            4. Módulo Veículos Alugados                                  ///\n");
