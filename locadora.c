@@ -8,12 +8,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <stdio.h>
+#include <stdlib.h>
 
 /////
 // Assinatura das funções
 void telaSobre(void);
 void telaPrincipal(void);
 void telaEquipe(void);
+void telaMenuCliente(void);
+void telaCadastrarCliente(void);
+void telaPesquisarCliente(void);
+void telaAlterarCliente(void);
+void telaExcluirCliente(void);
 
 /////
 // Programa principal
@@ -21,6 +27,11 @@ int main(void) {
     telaSobre();
     telaPrincipal();
     telaEquipe();
+    telaMenuCliente();
+    telaCadastrarCliente();
+    telaPesquisarCliente();
+    telaAlterarCliente();
+    telaExcluirCliente();
     return 0;
 }
 
@@ -28,6 +39,7 @@ int main(void) {
 // Funções
 
 void telaSobre(void) {
+    system("clear||cls");
     printf("\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                         ///\n");
@@ -36,7 +48,7 @@ void telaSobre(void) {
     printf("///               Departamento de Computação e Tecnologia                   ///\n");
     printf("///                  Disciplina DCT1106 -- Programação                      ///\n");
     printf("///                  Projeto Uma Locadora de Veículos                       ///\n");
-    printf("///             Developed by @rusdrael and @matheusfaria21 - Out, 2021       ///\n");
+    printf("///            Developed by @rusdrael and @matheusfaria21 - Out, 2021       ///\n");
     printf("///                                                                         ///\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                         ///\n");
@@ -51,11 +63,14 @@ void telaSobre(void) {
     printf("///                                                                         ///\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
 }
 
 
 
 void telaPrincipal(void) {
+    system("clear||cls");
     printf("\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                         ///\n");
@@ -70,7 +85,7 @@ void telaPrincipal(void) {
     printf("///                                                                         ///\n");
     printf("///            = = = = = Locadora de Veículos RM = = = = =                  ///\n");
     printf("///                                                                         ///\n");
-    printf("///            1. Módulo Cadastrar Cliente                                  ///\n");
+    printf("///            1. Módulo Cliente                                            ///\n");
     printf("///            2. Módulo Administrador                                      ///\n");
     printf("///            3. Módulo Veículos Disponíveis                               ///\n");
     printf("///            4. Módulo Veículos Alugados                                  ///\n");
@@ -79,11 +94,14 @@ void telaPrincipal(void) {
     printf("///                                                                         ///\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
 }
 
 
 
 void telaEquipe(void) {
+    system("clear||cls");
     printf("\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                         ///\n");
@@ -98,7 +116,7 @@ void telaEquipe(void) {
     printf("///                                                                         ///\n");
     printf("///            = = = = = Locadora de Veículos RM = = = = =                  ///\n");
     printf("///                                                                         ///\n");
-    printf("///            Este projeto foi desenvolvido por:                           ///\n"); 
+    printf("///            Este projeto foi desenvolvido por:                           ///\n");
     printf("///                                                                         ///\n");
     printf("///            Rusdrael Antony de Araújo Freire                             ///\n");
     printf("///            E-mail: antony.freire.086@ufrn.edu.br                        ///\n");
@@ -109,4 +127,146 @@ void telaEquipe(void) {
     printf("///                                                                         ///\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+
+
+void telaMenuCliente(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+    printf("///                                                                       ///\n");
+    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///           = = = = = = = = = Menu Cliente  = = = = = = = =             ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///                                                                       ///\n");
+    printf("///           1. Cadastrar um novo cliente                                ///\n");
+    printf("///           2. Pesquisar os dados de um cliente                         ///\n");
+    printf("///           3. Atualizar o cadastro de um cliente                       ///\n");
+    printf("///           4. Excluir um cliente do sistema                            ///\n");
+    printf("///           0. Voltar ao menu anterior                                  ///\n");
+    printf("///                                                                       ///\n");
+    printf("///           Escolha a opção desejada:                                   ///\n");
+    printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+
+
+void telaCadastrarCliente(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+    printf("///                                                                       ///\n");
+    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///           = = = = = = = = Cadastrar Cliente = = = = = = =             ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///                                                                       ///\n");
+    printf("///           CPF (apenas números):                                       ///\n");
+    printf("///           Nome completo:                                              ///\n");
+    printf("///           E-mail:                                                     ///\n");
+    printf("///           Data de Nascimento (dd/mm/aaaa):                            ///\n");
+    printf("///           Celular  (apenas números):                                  ///\n");
+    printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+
+
+void telaPesquisarCliente(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+    printf("///                                                                       ///\n");
+    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///           = = = = = = = Pesquisar Cliente = = = = = = = =             ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///                                                                       ///\n");
+    printf("///           Informe o CPF (apenas números):                             ///\n");
+    printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+
+
+void telaAlterarCliente(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+    printf("///                                                                       ///\n");
+    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///           = = = = = = = = Alterar Cliente = = = = = = = =             ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///                                                                       ///\n");
+    printf("///           Informe o CPF (apenas números):                             ///\n");
+    printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+}
+
+
+
+void telaExcluirCliente(void) {
+    system("clear||cls");
+    printf("\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+    printf("///                                                                       ///\n");
+    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///           = = = = = = = = Excluir Cliente = = = = = = = =             ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///                                                                       ///\n");
+    printf("///           Informe o CPF (apenas números):                             ///\n");
+    printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
 }
