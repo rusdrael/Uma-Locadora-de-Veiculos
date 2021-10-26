@@ -40,7 +40,7 @@ void telaSobre(void) {
     printf("///                                                                         ///\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                         ///\n");
-    printf("///            = = = = = Uma Locadora de Veículos = = = = =                 ///\n");
+    printf("///            = = = = = Locadora de Veículos RM = = = = =                  ///\n");
     printf("///                                                                         ///\n");
     printf("///  Programa para o projeto que será a avaliação do curso, produzido em    ///\n");
     printf("///  linguagem C, durante a disciplina DCT1106 - Programação do curso de    ///\n");
@@ -68,7 +68,7 @@ void telaPrincipal(void) {
     printf("///                                                                         ///\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                         ///\n");
-    printf("///            = = = = = Uma Locadora de Veículos = = = = =                 ///\n");
+    printf("///            = = = = = Locadora de Veículos RM = = = = =                  ///\n");
     printf("///                                                                         ///\n");
     printf("///            1. Módulo Cadastrar Cliente                                  ///\n");
     printf("///            2. Módulo Administrador                                      ///\n");
@@ -96,7 +96,7 @@ void telaEquipe(void) {
     printf("///                                                                         ///\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                         ///\n");
-    printf("///            = = = = = Uma Locadora de Veículos = = = = =                 ///\n");
+    printf("///            = = = = = Locadora de Veículos RM = = = = =                  ///\n");
     printf("///                                                                         ///\n");
     printf("///            Este projeto foi desenvolvido por:                           ///\n"); 
     printf("///                                                                         ///\n");
