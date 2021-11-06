@@ -271,7 +271,7 @@ void telaExcluirCliente(void) {
     printf("///           = = = = = = = = Excluir Cliente = = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
-    printf("///           Informe o CPF (apenas números):                             ///\n");
+    printf("///           Informe o CPF do cliente (apenas números):                  ///\n");
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
