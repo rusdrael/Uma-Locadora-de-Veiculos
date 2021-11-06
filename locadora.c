@@ -70,6 +70,8 @@ void telaSobre(void) {
 
 
 void telaPrincipal(void) {
+    char op;
+    
     system("clear||cls");
     printf("\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
@@ -91,6 +93,10 @@ void telaPrincipal(void) {
     printf("///            4. Módulo Veículos Alugados                                  ///\n");
     printf("///            5. Módulo Relatórios                                         ///\n");
     printf("///            0. Sair                                                      ///\n");
+    printf("///                                                                         ///\n");
+    printf("///            Escolha a opção desejada: ");
+    scanf("%c", &op);
+    getchar();
     printf("///                                                                         ///\n");
     printf("///////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
@@ -134,6 +140,8 @@ void telaEquipe(void) {
 
 
 void telaMenuCliente(void) {
+    char op;
+
     system("clear||cls");
     printf("\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -154,8 +162,9 @@ void telaMenuCliente(void) {
     printf("///           4. Excluir um cliente do sistema                            ///\n");
     printf("///           0. Voltar ao menu anterior                                  ///\n");
     printf("///                                                                       ///\n");
-    printf("///           Escolha a opção desejada:                                   ///\n");
-    printf("///                                                                       ///\n");
+    printf("///           Escolha a opção desejada: ");                       
+    scanf("%c", &op);
+    getchar();
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
