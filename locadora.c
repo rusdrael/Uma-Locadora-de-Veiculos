@@ -175,6 +175,12 @@ void telaMenuCliente(void) {
 
 
 void telaCadastrarCliente(void) {
+    char cpf[12];
+    char nome[51];
+    char email[51];
+    char nasc[11];
+    char celular[12];
+
     system("clear||cls");
     printf("\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -189,11 +195,21 @@ void telaCadastrarCliente(void) {
     printf("///           = = = = = = = = Cadastrar Cliente = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
-    printf("///           CPF (apenas números):                                       ///\n");
-    printf("///           Nome completo:                                              ///\n");
-    printf("///           E-mail:                                                     ///\n");
-    printf("///           Data de Nascimento (dd/mm/aaaa):                            ///\n");
-    printf("///           Celular  (apenas números):                                  ///\n");
+    printf("///           CPF (apenas números): ");
+    scanf("%[0-9]", cpf);
+    getchar();
+    printf("///           Nome completo: ");
+    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", nome);
+    getchar();
+    printf("///           E-mail: ");
+    scanf("%[A-Za-z@._]", email);
+    getchar();
+    printf("///           Data de Nascimento (dd/mm/aaaa):  ");
+    scanf("%[0-9/]", nasc);
+    getchar();
+    printf("///           Celular  (apenas números): ");
+    scanf("%[0-9]", celular);
+    getchar();
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -205,6 +221,8 @@ void telaCadastrarCliente(void) {
 
 
 void telaPesquisarCliente(void) {
+    char cpf[12];
+
     system("clear||cls");
     printf("\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -219,7 +237,9 @@ void telaPesquisarCliente(void) {
     printf("///           = = = = = = = Pesquisar Cliente = = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
-    printf("///           Informe o CPF (apenas números):                             ///\n");
+    printf("///           Informe o CPF (apenas números): ");
+    scanf("%[0-9]", cpf);
+    getchar();
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -231,6 +251,8 @@ void telaPesquisarCliente(void) {
 
 
 void telaAlterarCliente(void) {
+    char cpf[12];
+
     system("clear||cls");
     printf("\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -245,7 +267,9 @@ void telaAlterarCliente(void) {
     printf("///           = = = = = = = = Alterar Cliente = = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
-    printf("///           Informe o CPF (apenas números):                             ///\n");
+    printf("///           Informe o CPF (apenas números): ");
+    scanf("%[0-9]", cpf);
+    getchar();
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -257,6 +281,8 @@ void telaAlterarCliente(void) {
 
 
 void telaExcluirCliente(void) {
+    char cpf[12];
+    
     system("clear||cls");
     printf("\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -271,7 +297,9 @@ void telaExcluirCliente(void) {
     printf("///           = = = = = = = = Excluir Cliente = = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
-    printf("///           Informe o CPF do cliente (apenas números):                  ///\n");
+    printf("///           Informe o CPF (apenas números): ");
+    scanf("%[0-9]", cpf);
+    getchar();
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
