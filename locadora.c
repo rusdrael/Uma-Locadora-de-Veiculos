@@ -10,19 +10,53 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/////
-// Assinatura das funções
+////////////////////////////
+// Assinatura das funções //
+////////////////////////////
+
 void telaSobre(void);
 void telaPrincipal(void);
 void telaEquipe(void);
+
+void moduloCliente(void);
 void telaMenuCliente(void);
 void telaCadastrarCliente(void);
 void telaPesquisarCliente(void);
 void telaAlterarCliente(void);
 void telaExcluirCliente(void);
+void cadastrarCliente(void);
+void pesquisarCliente(void);
+void alterarCliente(void);
+void excluirCliente(void);
 
-/////
-// Programa principal
+void moduloAdministrador(void);
+void telaMenuAdministrador(void);
+void telaCadastrarAdministrador(void);
+void telaPesquisarAdministrador(void);
+void telaAlterarAdministrador(void);
+void telaExcluirAdministrador(void);
+void cadastrarAdministrador(void);
+void pesquisarAdministrador(void);
+void alterarAdministrador(void);
+void excluirAdministrador(void);
+
+
+void moduloVeiculosDisp(void);
+void telaMenuVeiculosDisp(void);
+void telaCadastrarVeiculosDisp(void);
+void telaPesquisarVeiculosDisp(void);
+void telaAlterarVeiculosDisp(void);
+void telaExcluirVeiculosDisp(void);
+void cadastrarVeiculosDisp(void);
+void pesquisarVeiculosDisp(void);
+void alterarVeiculosDisp(void);
+void excluirVeiculosDisp(void);
+
+
+////////////////////////
+// Programa principal //
+////////////////////////
+
 int main(void) {
     telaSobre();
     telaPrincipal();
@@ -35,8 +69,9 @@ int main(void) {
     return 0;
 }
 
-/////
-// Funções
+/////////////
+// Funções //
+/////////////
 
 void telaSobre(void) {
     system("clear||cls");
