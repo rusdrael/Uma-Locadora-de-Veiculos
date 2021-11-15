@@ -15,11 +15,11 @@
 ////////////////////////////
 
 void telaSobre(void);
-void telaPrincipal(void);
+char telaPrincipal(void);
 void telaEquipe(void);
 
 void moduloCliente(void);
-void telaMenuCliente(void);
+char telaMenuCliente(void);
 void telaCadastrarCliente(void);
 void telaPesquisarCliente(void);
 void telaAlterarCliente(void);
@@ -30,7 +30,7 @@ void alterarCliente(void);
 void excluirCliente(void);
 
 void moduloAdministrador(void);
-void telaMenuAdministrador(void);
+char telaMenuAdministrador(void);
 void telaCadastrarAdministrador(void);
 void telaPesquisarAdministrador(void);
 void telaAlterarAdministrador(void);
@@ -40,9 +40,8 @@ void pesquisarAdministrador(void);
 void alterarAdministrador(void);
 void excluirAdministrador(void);
 
-
 void moduloVeiculosDisp(void);
-void telaMenuVeiculosDisp(void);
+char telaMenuVeiculosDisp(void);
 void telaCadastrarVeiculosDisp(void);
 void telaPesquisarVeiculosDisp(void);
 void telaAlterarVeiculosDisp(void);
@@ -52,26 +51,69 @@ void pesquisarVeiculosDisp(void);
 void alterarVeiculosDisp(void);
 void excluirVeiculosDisp(void);
 
+void moduloVeiculosAlug(void);
+
+void moduloRelatorios(void);
 
 ////////////////////////
 // Programa principal //
 ////////////////////////
 
+//Inspirado no modelo de @flgorgonio
 int main(void) {
-    telaSobre();
-    telaPrincipal();
-    telaEquipe();
-    telaMenuCliente();
-    telaCadastrarCliente();
-    telaPesquisarCliente();
-    telaAlterarCliente();
-    telaExcluirCliente();
+    char escolha;
+    do {
+        escolha = telaPrincipal();
+        switch(escolha) {
+            case '1': moduloCliente();
+                                break;
+            case '2': moduloAdministrador();
+                                break;
+            case '3': moduloVeiculosDisp();
+                                break;
+            case '4': moduloVeiculosAlug();
+                                break;
+            case '5': moduloRelatorios(); 
+                                break;
+        }
+    } while (escolha != '0');                                                      
     return 0;
 }
 
-/////////////
-// Funções //
-/////////////
+
+char telaPrincipal(void) {
+    char op;
+    system("clear||cls");
+    printf("\n");
+    printf("///////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                         ///\n");
+    printf("///             Universidade Federal do Rio Grande do Norte                 ///\n");
+    printf("///                 Centro de Ensino Superior do Seridó                     ///\n");
+    printf("///               Departamento de Computação e Tecnologia                   ///\n");
+    printf("///                  Disciplina DCT1106 -- Programação                      ///\n");
+    printf("///                  Projeto Uma Locadora de Veículos                       ///\n");
+    printf("///             Developed by @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                         ///\n");
+    printf("///////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                         ///\n");
+    printf("///            = = = = = Locadora de Veículos RM = = = = =                  ///\n");
+    printf("///                                                                         ///\n");
+    printf("///            1. Módulo Cliente                                            ///\n");
+    printf("///            2. Módulo Administrador                                      ///\n");
+    printf("///            3. Módulo Veículos Disponíveis                               ///\n");
+    printf("///            4. Módulo Veículos Alugados                                  ///\n");
+    printf("///            5. Módulo Relatórios                                         ///\n");
+    printf("///            0. Sair                                                      ///\n");
+    printf("///                                                                         ///\n");
+    printf("///            Escolha a opção desejada: ");
+    scanf("%c", &op);
+    getchar();
+    printf("///                                                                         ///\n");
+    printf("///////////////////////////////////////////////////////////////////////////////\n");
+    printf("\n");
+    return op;
+}
+
 
 void telaSobre(void) {
     system("clear||cls");
@@ -101,44 +143,6 @@ void telaSobre(void) {
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
-
-
-
-void telaPrincipal(void) {
-    char op;
-    
-    system("clear||cls");
-    printf("\n");
-    printf("///////////////////////////////////////////////////////////////////////////////\n");
-    printf("///                                                                         ///\n");
-    printf("///             Universidade Federal do Rio Grande do Norte                 ///\n");
-    printf("///                 Centro de Ensino Superior do Seridó                     ///\n");
-    printf("///               Departamento de Computação e Tecnologia                   ///\n");
-    printf("///                  Disciplina DCT1106 -- Programação                      ///\n");
-    printf("///                  Projeto Uma Locadora de Veículos                       ///\n");
-    printf("///             Developed by @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
-    printf("///                                                                         ///\n");
-    printf("///////////////////////////////////////////////////////////////////////////////\n");
-    printf("///                                                                         ///\n");
-    printf("///            = = = = = Locadora de Veículos RM = = = = =                  ///\n");
-    printf("///                                                                         ///\n");
-    printf("///            1. Módulo Cliente                                            ///\n");
-    printf("///            2. Módulo Administrador                                      ///\n");
-    printf("///            3. Módulo Veículos Disponíveis                               ///\n");
-    printf("///            4. Módulo Veículos Alugados                                  ///\n");
-    printf("///            5. Módulo Relatórios                                         ///\n");
-    printf("///            0. Sair                                                      ///\n");
-    printf("///                                                                         ///\n");
-    printf("///            Escolha a opção desejada: ");
-    scanf("%c", &op);
-    getchar();
-    printf("///                                                                         ///\n");
-    printf("///////////////////////////////////////////////////////////////////////////////\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
-}
-
 
 
 void telaEquipe(void) {
@@ -173,10 +177,49 @@ void telaEquipe(void) {
 }
 
 
+////////////////////
+// Módulo Cliente //
+////////////////////
 
-void telaMenuCliente(void) {
+//Inspirado no modelo de @flgorgonio
+void moduloCliente(void) {
+    char escolha;
+    do {
+        escolha = telaMenuCliente();
+        switch(escolha) {
+            case '1': cadastrarCliente();
+                                break;
+            case '2': pesquisarCliente();
+                                break;
+            case '3': alterarCliente();
+                                break;
+            case '4': excluirCliente();
+                                break;
+        }
+    } while (escolha != '0');                                                      
+}
+
+
+void cadastrarCliente(void) {
+    telaCadastrarCliente();
+}
+
+
+void pesquisarCliente(void) {
+    telaPesquisarCliente();
+}
+
+void alterarCliente(void) {
+    telaAlterarCliente();
+}
+
+void excluirCliente(void) {
+    telaExcluirCliente();
+}
+
+
+char telaMenuCliente(void) {
     char op;
-
     system("clear||cls");
     printf("\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -203,10 +246,8 @@ void telaMenuCliente(void) {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+    return op;
 }
-
 
 
 void telaCadastrarCliente(void) {
@@ -249,10 +290,7 @@ void telaCadastrarCliente(void) {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
 }
-
 
 
 void telaPesquisarCliente(void) {
@@ -279,10 +317,7 @@ void telaPesquisarCliente(void) {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
 }
-
 
 
 void telaAlterarCliente(void) {
@@ -309,10 +344,7 @@ void telaAlterarCliente(void) {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
 }
-
 
 
 void telaExcluirCliente(void) {
@@ -339,6 +371,27 @@ void telaExcluirCliente(void) {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+}
+
+
+void moduloAdministrador(void) {
+	// modulo em desenvolvimento
+
+}
+
+
+void moduloVeiculosDisp(void) {
+	// modulo em desenvolvimento
+
+}
+
+void moduloVeiculosAlug(void) {
+	// modulo em desenvolvimento
+
+}
+
+
+void moduloRelatorios(void) {
+	// modulo em desenvolvimento
+
 }
