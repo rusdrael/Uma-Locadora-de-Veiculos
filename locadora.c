@@ -22,33 +22,33 @@ void moduloCliente(void);
 char telaMenuCliente(void);
 void telaCadastrarCliente(void);
 void telaPesquisarCliente(void);
-void telaAlterarCliente(void);
+void telaAtualizarCliente(void);
 void telaExcluirCliente(void);
 void cadastrarCliente(void);
 void pesquisarCliente(void);
-void alterarCliente(void);
+void atualizarCliente(void);
 void excluirCliente(void);
 
 void moduloAdministrador(void);
 char telaMenuAdministrador(void);
 void telaCadastrarAdministrador(void);
 void telaPesquisarAdministrador(void);
-void telaAlterarAdministrador(void);
+void telaAtualizarAdministrador(void);
 void telaExcluirAdministrador(void);
 void cadastrarAdministrador(void);
 void pesquisarAdministrador(void);
-void alterarAdministrador(void);
+void atualizarAdministrador(void);
 void excluirAdministrador(void);
 
 void moduloVeiculosDisp(void);
 char telaMenuVeiculosDisp(void);
 void telaCadastrarVeiculosDisp(void);
 void telaPesquisarVeiculosDisp(void);
-void telaAlterarVeiculosDisp(void);
+void telaAtualizarVeiculosDisp(void);
 void telaExcluirVeiculosDisp(void);
 void cadastrarVeiculosDisp(void);
 void pesquisarVeiculosDisp(void);
-void alterarVeiculosDisp(void);
+void atualizarVeiculosDisp(void);
 void excluirVeiculosDisp(void);
 
 void moduloVeiculosAlug(void);
@@ -191,7 +191,7 @@ void moduloCliente(void) {
                                 break;
             case '2': pesquisarCliente();
                                 break;
-            case '3': alterarCliente();
+            case '3': atualizarCliente();
                                 break;
             case '4': excluirCliente();
                                 break;
@@ -209,8 +209,8 @@ void pesquisarCliente(void) {
     telaPesquisarCliente();
 }
 
-void alterarCliente(void) {
-    telaAlterarCliente();
+void atualizarCliente(void) {
+    telaAtualizarCliente();
 }
 
 void excluirCliente(void) {
@@ -320,7 +320,7 @@ void telaPesquisarCliente(void) {
 }
 
 
-void telaAlterarCliente(void) {
+void telaAtualizarCliente(void) {
     char cpf[12];
 
     system("clear||cls");
@@ -334,7 +334,7 @@ void telaAlterarCliente(void) {
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                       ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-    printf("///           = = = = = = = = Alterar Cliente = = = = = = = =             ///\n");
+    printf("///           = = = = = = = = Atualizar Cliente = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
     printf("///           Informe o CPF (apenas números): ");
@@ -388,7 +388,7 @@ void moduloAdministrador(void) {
                                 break;
             case '2': pesquisarAdministrador();
                                 break;
-            case '3': alterarAdministrador();
+            case '3': atualizarAdministrador();
                                 break;
             case '4': excluirAdministrador();
                                 break;
@@ -406,8 +406,8 @@ void pesquisarAdministrador(void) {
     telaPesquisarAdministrador();
 }
 
-void alterarAdministrador(void) {
-    telaAlterarAdministrador();
+void atualizarAdministrador(void) {
+    telaAtualizarAdministrador();
 }
 
 void excluirAdministrador(void) {
@@ -517,7 +517,7 @@ void telaPesquisarAdministrador(void) {
 }
 
 
-void telaAlterarAdministrador(void) {
+void telaAtualizarAdministrador(void) {
     char cpf[12];
 
     system("clear||cls");
@@ -531,7 +531,7 @@ void telaAlterarAdministrador(void) {
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                       ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-    printf("///           = = = = = = Alterar Administrador = = = = = = =             ///\n");
+    printf("///           = = = = = = Atualizar Administrador = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
     printf("///           Informe o CPF (apenas números): ");
@@ -585,7 +585,7 @@ void moduloVeiculosDisp(void) {
                                 break;
             case '2': pesquisarVeiculosDisp();
                                 break;
-            case '3': alterarVeiculosDisp();
+            case '3': atualizarVeiculosDisp();
                                 break;
             case '4': excluirVeiculosDisp();
                                 break;
@@ -603,8 +603,8 @@ void pesquisarVeiculosDisp(void) {
     telaPesquisarVeiculosDisp();
 }
 
-void alterarVeiculosDisp(void) {
-    telaAlterarVeiculosDisp();
+void atualizarVeiculosDisp(void) {
+    telaAtualizarVeiculosDisp();
 }
 
 void excluirVeiculosDisp(void) {
@@ -710,7 +710,7 @@ void telaPesquisarVeiculosDisp(void) {
 }
 
 
-void telaAlterarVeiculosDisp(void) {
+void telaAtualizarVeiculosDisp(void) {
     char placa[8];
 
     system("clear||cls");
@@ -724,7 +724,7 @@ void telaAlterarVeiculosDisp(void) {
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                       ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-    printf("///           = = = = Alterar Veículos Disponíveis  = = = = =             ///\n");
+    printf("///           = = = = Atualizar Veículos Disponíveis  = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
     printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
