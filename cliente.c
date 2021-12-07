@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "cliente.h"
+#include "util.h"
 
 ///////////////////////////////
 // Funções do Módulo Cliente //
@@ -91,38 +92,46 @@ void telaCadastrarCliente(void) {
     char celular[12];
 
     system("clear||cls");
-    printf("\n");
-    printf("/////////////////////////////////////////////////////////////////////////////\n");
-    printf("///                                                                       ///\n");
-    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
-    printf("///                                                                       ///\n");
-    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
-    printf("///                                                                       ///\n");
-    printf("/////////////////////////////////////////////////////////////////////////////\n");
-    printf("///                                                                       ///\n");
-    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-    printf("///           = = = = = = = = Cadastrar Cliente = = = = = = =             ///\n");
-    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-    printf("///                                                                       ///\n");
-    printf("///           CPF (apenas números): ");
-    scanf("%[0-9]", cpf);
-    getchar();
-    printf("///           Nome completo: ");
-    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", nome);
-    getchar();
-    printf("///           E-mail: ");
-    scanf("%[A-Za-z0-9@._]", email);
-    getchar();
-    printf("///           Data de Nascimento (dd/mm/aaaa):  ");
-    scanf("%[0-9/]", nasc);
-    getchar();
-    printf("///           Celular  (apenas números): ");
-    scanf("%[0-9]", celular);
-    getchar();
-    printf("///                                                                       ///\n");
-    printf("///                                                                       ///\n");
-    printf("/////////////////////////////////////////////////////////////////////////////\n");
-    printf("\n");
+        printf("\n");
+        printf("/////////////////////////////////////////////////////////////////////////////\n");
+        printf("///                                                                       ///\n");
+        printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+        printf("///                                                                       ///\n");
+        printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+        printf("///                                                                       ///\n");
+        printf("/////////////////////////////////////////////////////////////////////////////\n");
+        printf("///                                                                       ///\n");
+        printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+        printf("///           = = = = = = = = Cadastrar Cliente = = = = = = =             ///\n");
+        printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+        printf("///                                                                       ///\n");
+        do {
+        printf("///           CPF (apenas números): ");
+        scanf("%[0-9]", cpf);
+        getchar();
+        } while (!validarCpf(cpf)); 
+        do {
+        printf("///           Nome completo: ");
+        scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", nome);
+        getchar();
+        } while (!validarNome(nome)); 
+        printf("///           E-mail: ");
+        scanf("%[A-Za-z0-9@._]", email);
+        getchar();
+        do {
+        printf("///           Data de Nascimento (dd/mm/aaaa):  ");
+        scanf("%[0-9/]", nasc);
+        getchar();
+        } while (!validarData(nasc));  
+        do {
+        printf("///           Celular  (apenas números): ");
+        scanf("%[0-9]", celular);
+        getchar();
+        } while (!validarFone(celular));
+        printf("///                                                                       ///\n");
+        printf("///                                                                       ///\n");
+        printf("/////////////////////////////////////////////////////////////////////////////\n");
+        printf("\n");
 }
 
 

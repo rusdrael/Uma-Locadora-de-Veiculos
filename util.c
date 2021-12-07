@@ -165,3 +165,22 @@ int validarPlaca(char* placa) {
   // Ainda não implementada
 	return 1;
 }
+
+//////////////////////
+// Validação do CPF //
+//////////////////////
+
+//Inspirado no modelo de @flgorgonio
+int validarCpf(char* cpf) {
+  int tam;
+  tam = strlen(cpf);
+  if (tam < 10 || tam > 11) {
+    return 0;
+  }
+  for (int i = 0; i < tam; i++) {
+    if (!ehDigito(cpf[i])) {
+      return 0;
+    }
+  }
+  return 1;
+}

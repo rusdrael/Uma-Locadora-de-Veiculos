@@ -25,3 +25,4 @@ int validarEmail(char*);
 int validarData(char*);
 int validarFone(char*);
 int validarPlaca(char*);
+int validarCpf(char*);
