@@ -110,50 +110,13 @@ int ehData(int dd, int mm, int aa) {
 ///////////////////////
 
 //Criado por @flgorgonio
-//int validarNome(char* nome) {
-//  for (int i=0; nome[i]!='\0'; i++) {
-//    if (!ehLetra(nome[i])) {
-//      return 0;
-//    }
-//  }
-//	return 1;
-//}
-int validarNome(char nome[]){
-int tam = strlen(nome);
-char acentos[] ="ÁÉÍÓÚÂÊÔÇÀÃÕáéíóúâêôçàãõ";
-int tamAcentos = strlen(acentos);
-int cont = 0;
-if (tam == 0) {
-    return 0;
-  }
-  for (int i = 0; i < tam; i++) {
-    if (nome[i] >= 'A' && nome[i] <= 'Z') {
-      continue;
-    } else if (nome[i] >= 'a' && nome[i] <= 'z') {
-      continue;
-    } else if (nome[i] == ' ') {
-      continue;
-    } else {
-      if (nome[i] >= '0' && nome[i] <= '9'){
-        return 0;
-      }else{
-      for(int l = 0; l < tamAcentos;l++){
-        if(nome[i] == acentos[l]){
-          cont += 1;
-          break;
-        }else{
-          cont +=0;
-        }
-      }
-      if (cont == 0){
-        return 0;
-      }else if(cont >= 1){
-        continue;
-      }
+int validarNome(char* nome) {
+  for (int i=0; nome[i]!='\0'; i++) {
+    if (!ehLetra(nome[i])) {
+      return 0;
     }
   }
-  }
-  return 1;
+	return 1;
 }
 
 ////////////////////////
