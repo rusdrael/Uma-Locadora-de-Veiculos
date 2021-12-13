@@ -9,7 +9,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "alugados.h"
+#include "util.h"
 
 /////////////////////////////////////////
 // Funções do Módulo Veículos Alugados //
@@ -84,10 +86,10 @@ char telaMenuVeiculosAlug(void) {
 
 
 void telaCadastrarVeiculosAlug(void) {
-    char placa[8];
-    char nome[51];
-    char marca[51];
-    char ano[5];
+    char placaVeic[8];
+    char nomeVeic[51];
+    char marcaVeic[51];
+    char anoVeic[5];
 
     system("clear||cls");
     printf("\n");
@@ -103,18 +105,26 @@ void telaCadastrarVeiculosAlug(void) {
     printf("///           = = = = = Cadastrar Veículos Alugados = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
+do {    
     printf("///           Placa (modelo Mercosul/letras maiúsculas): ");
-    scanf("%[A-Z0-9]", placa);
+    scanf("%[A-Z0-9]", placaVeic);
     getchar();
+} while (!validarPlacaVeic(placaVeic));     
+do {    
     printf("///           Nome: ");
-    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ 0-9]", nome);
+    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ 0-9]", nomeVeic);
     getchar();
+} while (!validarNomeVeic(nomeVeic));    
+do {     
     printf("///           Marca: ");
-    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ 0-9]", marca);
+    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ 0-9]", marcaVeic);
     getchar();
+} while (!validarMarcaVeic(marcaVeic));     
+do {     
     printf("///           Ano: ");
-    scanf("%[0-9]", ano);
+    scanf("%[0-9]", anoVeic);
     getchar();
+} while (!validarAnoVeic(anoVeic));     
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -123,7 +133,7 @@ void telaCadastrarVeiculosAlug(void) {
 
 
 void telaPesquisarVeiculosAlug(void) {
-    char placa[8];
+    char placaVeic[8];
 
     system("clear||cls");
     printf("\n");
@@ -139,9 +149,11 @@ void telaPesquisarVeiculosAlug(void) {
     printf("///           = = = = = Pesquisar Veículos Alugados = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
+do {
     printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
-    scanf("%[A-Z0-9]", placa);
+    scanf("%[A-Z0-9]", placaVeic);
     getchar();
+} while (!validarPlacaVeic(placaVeic));
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -150,7 +162,7 @@ void telaPesquisarVeiculosAlug(void) {
 
 
 void telaAtualizarVeiculosAlug(void) {
-    char placa[8];
+    char placaVeic[8];
 
     system("clear||cls");
     printf("\n");
@@ -166,9 +178,11 @@ void telaAtualizarVeiculosAlug(void) {
     printf("///           = = = = = Atualizar Veículos Alugados = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
+do {
     printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
-    scanf("%[A-Z0-9]", placa);
+    scanf("%[A-Z0-9]", placaVeic);
     getchar();
+} while (!validarPlacaVeic(placaVeic));
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -177,7 +191,7 @@ void telaAtualizarVeiculosAlug(void) {
 
 
 void telaExcluirVeiculosAlug(void) {
-    char placa[8];
+    char placaVeic[8];
     
     system("clear||cls");
     printf("\n");
@@ -193,9 +207,11 @@ void telaExcluirVeiculosAlug(void) {
     printf("///           = = = = = = Excluir Veículos Alugados = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
+do {
     printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
-    scanf("%[A-Z0-9]", placa);
+    scanf("%[A-Z0-9]", placaVeic);
     getchar();
+} while (!validarPlacaVeic(placaVeic));
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");

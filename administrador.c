@@ -115,9 +115,11 @@ void telaCadastrarAdministrador(void) {
         scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", nome);
         getchar();
     } while (!validarNome(nome));    
+    do {
         printf("///           E-mail: ");
         scanf("%[A-Za-z0-9@._]", email);
-        getchar();    
+        getchar(); 
+    } while (!validarEmail(email));   
     do {
         printf("///           Data de Nascimento (dd/mm/aaaa):  ");
         scanf("%[0-9/]", nasc);
@@ -127,7 +129,7 @@ void telaCadastrarAdministrador(void) {
         printf("///           Celular  (apenas números): ");
         scanf("%[0-9]", celular);
         getchar();
-    } while (!validarFone(celular));
+    } while (!validarCelular(celular));
         printf("///                                                                       ///\n");
         printf("///                                                                       ///\n");
         printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -152,9 +154,11 @@ void telaPesquisarAdministrador(void) {
     printf("///           = = = = = Pesquisar Administrador = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
+do {
     printf("///           Informe o CPF (apenas números): ");
     scanf("%[0-9]", cpf);
     getchar();
+} while (!validarCpf(cpf));      
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -179,9 +183,11 @@ void telaAtualizarAdministrador(void) {
     printf("///           = = = = = = Atualizar Administrador = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
+do {  
     printf("///           Informe o CPF (apenas números): ");
     scanf("%[0-9]", cpf);
     getchar();
+} while (!validarCpf(cpf));      
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -206,9 +212,11 @@ void telaExcluirAdministrador(void) {
     printf("///           = = = = = = Excluir Administrador = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
+do {    
     printf("///           Informe o CPF (apenas números): ");
     scanf("%[0-9]", cpf);
     getchar();
+} while (!validarCpf(cpf));      
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");

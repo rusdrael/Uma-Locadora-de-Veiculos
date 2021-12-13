@@ -105,29 +105,31 @@ void telaCadastrarCliente(void) {
         printf("///           = = = = = = = = Cadastrar Cliente = = = = = = =             ///\n");
         printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
         printf("///                                                                       ///\n");
-        do {
+    do {
         printf("///           CPF (apenas números): ");
         scanf("%[0-9]", cpf);
         getchar();
-        } while (!validarCpf(cpf)); 
-        do {
+    } while (!validarCpf(cpf)); 
+    do {
         printf("///           Nome completo: ");
         scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", nome);
         getchar();
-        } while (!validarNome(nome)); 
+    } while (!validarNome(nome)); 
+    do {
         printf("///           E-mail: ");
         scanf("%[A-Za-z0-9@._]", email);
         getchar();
-        do {
+    } while (!validarEmail(email));
+    do {
         printf("///           Data de Nascimento (dd/mm/aaaa):  ");
         scanf("%[0-9/]", nasc);
         getchar();
-        } while (!validarData(nasc));  
-        do {
+    } while (!validarData(nasc));  
+    do {
         printf("///           Celular  (apenas números): ");
         scanf("%[0-9]", celular);
         getchar();
-        } while (!validarFone(celular));
+    } while (!validarCelular(celular));
         printf("///                                                                       ///\n");
         printf("///                                                                       ///\n");
         printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -152,9 +154,11 @@ void telaPesquisarCliente(void) {
     printf("///           = = = = = = = Pesquisar Cliente = = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
+do {    
     printf("///           Informe o CPF (apenas números): ");
     scanf("%[0-9]", cpf);
     getchar();
+} while (!validarCpf(cpf));
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -179,9 +183,11 @@ void telaAtualizarCliente(void) {
     printf("///           = = = = = = = = Atualizar Cliente = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
+do { 
     printf("///           Informe o CPF (apenas números): ");
     scanf("%[0-9]", cpf);
     getchar();
+} while (!validarCpf(cpf));
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -206,9 +212,11 @@ void telaExcluirCliente(void) {
     printf("///           = = = = = = = = Excluir Cliente = = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
+do {
     printf("///           Informe o CPF (apenas números): ");
     scanf("%[0-9]", cpf);
     getchar();
+} while (!validarCpf(cpf));
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");

@@ -9,6 +9,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 /////////////////
 // Limpar Tela //
@@ -44,6 +45,23 @@ int ehLetra(char c) {
     return 1;
   } else if (c >= 'a' && c <= 'z') {
     return 1;
+  } else {
+    return 0;
+  }
+}
+
+////////////////////////////
+// Validar Letra e Dígito //
+////////////////////////////
+
+//Inspirado no modelo de @flgorgonio
+int ehLetraDig(char c) {
+  if (c >= 'A' && c <= 'Z') {
+    return 1;
+  } else if (c >= 'a' && c <= 'z') {
+    return 1;
+  } else if (c >= '0' && c <= '9') {
+    return 1;  
   } else {
     return 0;
   }
@@ -92,23 +110,89 @@ int ehData(int dd, int mm, int aa) {
 ///////////////////////
 
 //Criado por @flgorgonio
-int validarNome(char* nome) {
-  for (int i=0; nome[i]!='\0'; i++) {
-    if (!ehLetra(nome[i])) {
-      return 0;
+//int validarNome(char* nome) {
+//  for (int i=0; nome[i]!='\0'; i++) {
+//    if (!ehLetra(nome[i])) {
+//      return 0;
+//    }
+//  }
+//	return 1;
+//}
+int validarNome(char nome[]){
+int tam = strlen(nome);
+char acentos[] ="ÁÉÍÓÚÂÊÔÇÀÃÕáéíóúâêôçàãõ";
+int tamAcentos = strlen(acentos);
+int cont = 0;
+if (tam == 0) {
+    return 0;
+  }
+  for (int i = 0; i < tam; i++) {
+    if (nome[i] >= 'A' && nome[i] <= 'Z') {
+      continue;
+    } else if (nome[i] >= 'a' && nome[i] <= 'z') {
+      continue;
+    } else if (nome[i] == ' ') {
+      continue;
+    } else {
+      if (nome[i] >= '0' && nome[i] <= '9'){
+        return 0;
+      }else{
+      for(int l = 0; l < tamAcentos;l++){
+        if(nome[i] == acentos[l]){
+          cont += 1;
+          break;
+        }else{
+          cont +=0;
+        }
+      }
+      if (cont == 0){
+        return 0;
+      }else if(cont >= 1){
+        continue;
+      }
     }
   }
-	return 1;
+  }
+  return 1;
 }
 
 ////////////////////////
 // Validação do Email //
 ////////////////////////
 
-//Criado por @flgorgonio
-int validarEmail(char* email) {
-  // Ainda não implementada
-	return 1;
+int validarEmail(char email[]) {
+  int tam = strlen(email);
+  int arrobas = 0;
+  int pontos = 0;
+  int posicaoArroba = 0;
+  int posicaoPonto = 0;
+  for(int i = 0; i < tam; i++){
+    if (email[i] == '@'){
+      arrobas+=1;
+      posicaoArroba = i;
+      if (!(email[i+1] >= 'a' && email[i+1] <= 'z')){
+        return 0;
+      }
+    }
+  }
+  if(arrobas != 1){
+    return 0;
+  }
+  for (int i = 0; i < tam; i++){
+    if(email[i] == '.'){
+      pontos += 1;
+      posicaoPonto = i;
+      if (email[i+1] == '.'){
+        return 0;
+      }
+    }
+  
+  }
+  if (pontos == 0 || posicaoPonto <= posicaoArroba){
+    return 0;
+  }
+
+  return 1;
 }
 
 ///////////////////////
@@ -142,28 +226,18 @@ int validarData(char* data) {
 ///////////////////////////
 
 //Criado por @flgorgonio
-int validarFone(char* fone) {
+int validarCelular(char* celular) {
   int tam;
-  tam = strlen(fone);
+  tam = strlen(celular);
   if (tam != 11) {
     return 0;
   }
   for (int i = 0; i < tam; i++) {
-    if (!ehDigito(fone[i])) {
+    if (!ehDigito(celular[i])) {
         return 0;
     }
   }
   return 1;
-}
-
-////////////////////////
-// Validação da Placa //
-////////////////////////
-
-//Inspirado no modelo de @flgorgonio
-int validarPlaca(char* placa) {
-  // Ainda não implementada
-	return 1;
 }
 
 //////////////////////
@@ -171,15 +245,95 @@ int validarPlaca(char* placa) {
 //////////////////////
 
 //Inspirado no modelo de @flgorgonio
-int validarCpf(char* cpf) {
+int validarCpf(char cpf[]) {
+  int soma;
+  int d1;
+  int d2;
+  int tam = strlen(cpf);
+  if (tam != 11) {
+    return 0;
+  }
+  for(int i = 0; i<11;i++){
+    if ((cpf[i] - '0') < 0 || (cpf[i] - '0') > 9){
+    return 0;
+    }
+  }
+  soma = 0;
+  for(int i = 0; i<9;i++){
+  soma += ((cpf[i] - '0') * (10 - i));
+  }
+  d1 = 11 - (soma % 11);
+  if (d1 == 10 || d1 == 11){
+    d1 = 0;
+  }
+  if (d1 != (cpf[9] - '0')){
+    return 0;
+  }
+  soma = 0;
+  for(int i = 0; i<10;i++){
+    soma += (cpf[i]-'0') * (11 - i);
+  }
+  d2 = 11 - (soma%11);
+  if (d2 == 10 || d2 == 11){
+    d2 = 0;
+  }
+  if (d2 != (cpf[10] - '0')){
+    return 0;
+  }
+  return 1;
+}
+
+////////////////////////////
+// Validação da PlacaVeic //
+////////////////////////////
+
+int validarPlacaVeic(char* placaVeic) {
+  // Ainda não implementada
+	return 1;
+}
+
+///////////////////////////
+// Validação do NomeVeic //
+///////////////////////////
+
+//Inspirado no modelo de @flgorgonio
+int validarNomeVeic(char* nomeVeic) {
+  for (int i=0; nomeVeic[i]!='\0'; i++) {
+    if (!ehLetraDig(nomeVeic[i])) {
+      return 0;
+    }
+  }
+	return 1;
+}
+
+////////////////////////////
+// Validação da MarcaVeic //
+////////////////////////////
+
+//Inspirado no modelo de @flgorgonio
+int validarMarcaVeic(char* marcaVeic) {
+  for (int i=0; marcaVeic[i]!='\0'; i++) {
+    if (!ehLetra(marcaVeic[i])) {
+      return 0;
+    }
+  }
+	return 1;
+}
+
+//////////////////////////
+// Validação do AnoVeic //
+//////////////////////////
+
+//Inspirado no modelo de @flgorgonio
+int validarAnoVeic(char* anoVeic) {
   int tam;
-  tam = strlen(cpf);
-  if (tam < 10 || tam > 11) {
+  tam = strlen(anoVeic);
+  if (tam != 4) {
     return 0;
   }
   for (int i = 0; i < tam; i++) {
-    if (!ehDigito(cpf[i])) {
-      return 0;
+    if (!ehDigito(anoVeic[i])) {
+        return 0;
     }
   }
   return 1;
