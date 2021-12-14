@@ -250,9 +250,37 @@ int validarCpf(char cpf[]) {
 // Validação da PlacaVeic //
 ////////////////////////////
 
-int validarPlacaVeic(char* placaVeic) {
-  // Ainda não implementada
-	return 1;
+//Criado por @Ana678
+int validarPlacaVeic(char placaVeic[8]){
+if(strlen(placaVeic) == 7){
+  int valido_2 = 0;
+  int valido_3 = 0;
+  int valido_6 = 0;
+  for(int i=0; i < 3; i++){
+    if(!isdigit(placaVeic[i]) && placaVeic[i] == toupper(placaVeic[i])){
+      valido_2 += 1;
+    }
+  }
+  if(valido_2 == 3){
+    if(!isdigit(placaVeic[3]) && placaVeic[3] == toupper(placaVeic[3])){
+      valido_3 += 1;
+
+    }else{
+      valido_3 += 1;
+    }
+  }
+  if(valido_3 == 1){
+    for(int i=6; i > 4; i--){
+      if(isdigit(placaVeic[i])){
+        valido_6 += 1;
+      }
+    }
+  }
+  if(valido_6 == 2){
+    return 1;
+  }
+}
+return 0;
 }
 
 ///////////////////////////
