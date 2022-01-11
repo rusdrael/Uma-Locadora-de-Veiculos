@@ -36,7 +36,10 @@ void moduloAdministrador(void) {
 
 
 void cadastrarAdministrador(void) {
-    telaCadastrarAdministrador();
+    Administrador* admin;
+
+    admin = telaCadastrarAdministrador();
+    free(admin);
 }
 
 void pesquisarAdministrador(void) {
@@ -84,12 +87,9 @@ char telaMenuAdministrador(void) {
 }
 
 
-void telaCadastrarAdministrador(void) {
-    char cpf[12];
-    char nome[51];
-    char email[51];
-    char nasc[11];
-    char celular[12];
+Administrador* telaCadastrarAdministrador(void) {
+    Administrador* admin;
+        admin = (Administrador*) malloc(sizeof(Administrador));
 
     system("clear||cls");
         printf("\n");
@@ -107,33 +107,35 @@ void telaCadastrarAdministrador(void) {
         printf("///                                                                       ///\n");
     do {
         printf("///           CPF (apenas números): ");
-        scanf("%[0-9]", cpf);
+        scanf("%[^\n]", admin->cpf);
         getchar();
-    } while (!validarCpf(cpf));  
+    } while (!validarCpf(admin->cpf));  
     do {
         printf("///           Nome completo: ");
-        scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", nome);
+        scanf("%[^\n]", admin->nome);
         getchar();
-    } while (!validarNome(nome));    
+    } while (!validarNome(admin->nome));    
     do {
         printf("///           E-mail: ");
-        scanf("%[A-Za-z0-9@._]", email);
+        scanf("%[^\n]", admin->email);
         getchar(); 
-    } while (!validarEmail(email));   
+    } while (!validarEmail(admin->email));   
     do {
         printf("///           Data de Nascimento (dd/mm/aaaa):  ");
-        scanf("%[0-9/]", nasc);
+        scanf("%[^\n]", admin->nasc);
         getchar();
-    } while (!validarData(nasc));      
+    } while (!validarData(admin->nasc));      
     do {
         printf("///           Celular  (apenas números): ");
-        scanf("%[0-9]", celular);
+        scanf("%[^\n]", admin->celular);
         getchar();
-    } while (!validarCelular(celular));
+    } while (!validarCelular(admin->celular));
         printf("///                                                                       ///\n");
         printf("///                                                                       ///\n");
         printf("/////////////////////////////////////////////////////////////////////////////\n");
         printf("\n");
+
+        return admin;
 }
 
 
@@ -156,7 +158,7 @@ void telaPesquisarAdministrador(void) {
     printf("///                                                                       ///\n");
 do {
     printf("///           Informe o CPF (apenas números): ");
-    scanf("%[0-9]", cpf);
+    scanf("%[^\n]", cpf);
     getchar();
 } while (!validarCpf(cpf));      
     printf("///                                                                       ///\n");
@@ -185,7 +187,7 @@ void telaAtualizarAdministrador(void) {
     printf("///                                                                       ///\n");
 do {  
     printf("///           Informe o CPF (apenas números): ");
-    scanf("%[0-9]", cpf);
+    scanf("%[^\n]", cpf);
     getchar();
 } while (!validarCpf(cpf));      
     printf("///                                                                       ///\n");
@@ -214,7 +216,7 @@ void telaExcluirAdministrador(void) {
     printf("///                                                                       ///\n");
 do {    
     printf("///           Informe o CPF (apenas números): ");
-    scanf("%[0-9]", cpf);
+    scanf("%[^\n]", cpf);
     getchar();
 } while (!validarCpf(cpf));      
     printf("///                                                                       ///\n");

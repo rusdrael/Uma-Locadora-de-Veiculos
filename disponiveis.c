@@ -37,7 +37,10 @@ void moduloVeiculosDisp(void) {
 
 
 void cadastrarVeiculosDisp(void) {
-    telaCadastrarVeiculosDisp();
+    Disponiveis* disp;
+
+    disp = telaCadastrarVeiculosDisp();
+    free(disp);
 }
 
 void pesquisarVeiculosDisp(void) {
@@ -85,11 +88,9 @@ char telaMenuVeiculosDisp(void) {
 }
 
 
-void telaCadastrarVeiculosDisp(void) {
-    char placaVeic[8];
-    char nomeVeic[51];
-    char marcaVeic[51];
-    char anoVeic[5];
+Disponiveis* telaCadastrarVeiculosDisp(void) {
+    Disponiveis* disp;
+        disp = (Disponiveis*) malloc(sizeof(Disponiveis));
 
     system("clear||cls");
     printf("\n");
@@ -107,28 +108,30 @@ void telaCadastrarVeiculosDisp(void) {
     printf("///                                                                       ///\n");
 do {    
     printf("///           Placa (modelo Mercosul/letras maiúsculas): ");
-    scanf("%[A-Z0-9]", placaVeic);
+    scanf("%[^\n]", disp->placaVeic);
     getchar();
-} while (!validarPlacaVeic(placaVeic));     
+} while (!validarPlacaVeic(disp->placaVeic));     
 do {    
     printf("///           Nome: ");
-    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ 0-9]", nomeVeic);
+    scanf("%[^\n]", disp->nomeVeic);
     getchar();
-} while (!validarNomeVeic(nomeVeic));    
+} while (!validarNomeVeic(disp->nomeVeic));    
 do {     
     printf("///           Marca: ");
-    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ 0-9]", marcaVeic);
+    scanf("%[^\n]", disp->marcaVeic);
     getchar();
-} while (!validarMarcaVeic(marcaVeic));     
+} while (!validarMarcaVeic(disp->marcaVeic));     
 do {     
     printf("///           Ano: ");
-    scanf("%[0-9]", anoVeic);
+    scanf("%[^\n]", disp->anoVeic);
     getchar();
-} while (!validarAnoVeic(anoVeic));     
+} while (!validarAnoVeic(disp->anoVeic));     
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return disp;
 }
 
 
@@ -151,7 +154,7 @@ void telaPesquisarVeiculosDisp(void) {
     printf("///                                                                       ///\n");
 do {
     printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
-    scanf("%[A-Z0-9]", placaVeic);
+    scanf("%[^\n]", placaVeic);
     getchar();
 } while (!validarPlacaVeic(placaVeic));
     printf("///                                                                       ///\n");
@@ -180,7 +183,7 @@ void telaAtualizarVeiculosDisp(void) {
     printf("///                                                                       ///\n");
 do {
     printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
-    scanf("%[A-Z0-9]", placaVeic);
+    scanf("%[^\n]", placaVeic);
     getchar();
 } while (!validarPlacaVeic(placaVeic));
     printf("///                                                                       ///\n");
@@ -209,7 +212,7 @@ void telaExcluirVeiculosDisp(void) {
     printf("///                                                                       ///\n");
 do {
     printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
-    scanf("%[A-Z0-9]", placaVeic);
+    scanf("%[^\n]", placaVeic);
     getchar();
 } while (!validarPlacaVeic(placaVeic));
     printf("///                                                                       ///\n");

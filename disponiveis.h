@@ -7,13 +7,28 @@
 ///          Developed by @rusdrael and @matheusfaria21 - Out, 2021         ///
 ///////////////////////////////////////////////////////////////////////////////
 
+////////////////
+// Estruturas //
+////////////////
+
+typedef struct disponiveis Disponiveis;
+
+struct disponiveis{
+
+    char placaVeic[8];
+    char nomeVeic[51];
+    char marcaVeic[51];
+    char anoVeic[5];
+
+};
+
 ///////////////////////////////////////////////////////////
 // Assinatura das Funções do Módulo Veículos Disponíveis //
 ///////////////////////////////////////////////////////////
 
 void moduloVeiculosDisp(void);
 char telaMenuVeiculosDisp(void);
-void telaCadastrarVeiculosDisp(void);
+Disponiveis* telaCadastrarVeiculosDisp(void);
 void telaPesquisarVeiculosDisp(void);
 void telaAtualizarVeiculosDisp(void);
 void telaExcluirVeiculosDisp(void);
