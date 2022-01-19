@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "administrador.h"
 #include "util.h"
 
@@ -37,23 +38,82 @@ void moduloAdministrador(void) {
 
 void cadastrarAdministrador(void) {
     Administrador* admin;
-
     admin = telaCadastrarAdministrador();
+    gravarAdministrador(admin);
     free(admin);
 }
 
 void pesquisarAdministrador(void) {
-    telaPesquisarAdministrador();
+    Administrador* admin;
+	char* cpf;
+
+	cpf = telaPesquisarAdministrador();
+	admin = buscarAdministrador(cpf);
+	exibirAdministrador(admin);
+	free(admin); 
+	free(cpf);
 }
 
 void atualizarAdministrador(void) {
-    telaAtualizarAdministrador();
+   Administrador* admin;
+	char* cpf;
+
+	cpf = telaAtualizarAdministrador();
+	admin = buscarAdministrador(cpf);
+	if (admin == NULL) {
+    	printf("\n\nAdministrador não encontrado!\n\n");
+  	} else {
+		  admin = telaCadastrarAdministrador();
+		  strcpy(admin->cpf, cpf);
+		  regravarAdministrador(admin);
+		  free(admin);
+	}
+	free(cpf);
 }
 
 void excluirAdministrador(void) {
-    telaExcluirAdministrador();
+    Administrador* admin;
+	char *cpf;
+
+	cpf = telaExcluirAdministrador();
+	admin = (Administrador*) malloc(sizeof(Administrador));
+	admin = buscarAdministrador(cpf);
+	if (admin == NULL) {
+    	printf("\n\nAdministrador não encontrado!\n\n");
+  	} else {
+		  admin->status = False;
+		  regravarAdministrador(admin);
+		  free(admin);
+	}
+	free(cpf);
 }
 
+void telaErroArquivoAdmin(void) {
+	system("clear||cls");
+	printf("\n");
+	printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+    printf("///                                                                       ///\n");
+    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///           = = = = = = =  Ops! Ocorreu em erro = = = = = =             ///\n");
+	printf("///           = = =  Não foi possível acessar o arquivo = = =             ///\n");
+	printf("///           = = com informações sobre os administradores  =               ///\n");
+	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///           = =  Pedimos desculpas pelos inconvenientes = =             ///\n");
+	printf("///           = = =  mas este programa será finalizado! = = =             ///\n");
+	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+	getchar();
+	exit(1);
+}
 
 char telaMenuAdministrador(void) {
     char op;
@@ -130,6 +190,7 @@ Administrador* telaCadastrarAdministrador(void) {
         scanf("%[^\n]", admin->celular);
         getchar();
     } while (!validarCelular(admin->celular));
+    admin->status = True;
         printf("///                                                                       ///\n");
         printf("///                                                                       ///\n");
         printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -138,9 +199,20 @@ Administrador* telaCadastrarAdministrador(void) {
         return admin;
 }
 
+void gravarAdministrador(Administrador* admin) {
+	FILE* fp;
 
-void telaPesquisarAdministrador(void) {
-    char cpf[12];
+	fp = fopen("administradores.txt", "at");
+	if (fp == NULL) {
+		telaErroArquivoAdmin();
+	}
+	fwrite(admin, sizeof(Administrador), 1, fp);
+	fclose(fp);
+}
+
+char* telaPesquisarAdministrador(void) {
+    char* cpf;
+        cpf = (char*) malloc(12*sizeof(char));
 
     system("clear||cls");
     printf("\n");
@@ -165,11 +237,47 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return cpf;
 }
 
+Administrador* buscarAdministrador(char* cpf) {
+    FILE* fp;
+    Administrador* admin;
 
-void telaAtualizarAdministrador(void) {
-    char cpf[12];
+    admin = (Administrador*) malloc(sizeof(Administrador));
+    fp = fopen("administradores.txt", "rt");
+    if (fp == NULL) {
+        telaErroArquivoAdmin();
+    }
+    while(fread(admin, sizeof(Administrador), 1, fp)) {
+        if ((strcmp(admin->cpf, cpf) == 0)  && (admin->status == True)) {
+            fclose(fp);
+            return admin;
+        }
+    }
+    fclose(fp);
+    return NULL;
+}
+
+void exibirAdministrador(Administrador* admin) {
+
+    if (admin == NULL) {
+        printf("\n= = = Administrador Inexistente = = =\n");
+    } else {
+        printf("\n= = = Administrador Cadastrado = = =\n");
+        printf("CPF: %s\n", admin->cpf);
+        printf("Nome do administrador: %s\n", admin->nome);
+        printf("E-mail: %s\n", admin->email);
+        printf("Celular: %s\n", admin->celular);
+        printf("Status: %i\n", admin->status);
+    }
+    getchar();
+}
+
+char* telaAtualizarAdministrador(void) {
+    char* cpf;
+        cpf = (char*) malloc(12*sizeof(char));
 
     system("clear||cls");
     printf("\n");
@@ -194,11 +302,35 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return cpf;
 }
 
+void regravarAdministrador(Administrador* admin) {
+	int achou;
+	FILE* fp;
+	Administrador* adminLido;
 
-void telaExcluirAdministrador(void) {
-    char cpf[12];
+	adminLido = (Administrador*) malloc(sizeof(Administrador));
+	fp = fopen("administradores.txt", "r+t");
+	if (fp == NULL) {
+		telaErroArquivoAdmin();
+	}
+	achou = False;
+	while(fread(adminLido, sizeof(Administrador), 1, fp) && !achou) {
+        if (strcmp(adminLido->cpf, admin->cpf) == 0) {
+			achou = 1;
+			fseek(fp, -1*sizeof(Administrador), SEEK_CUR);
+        fwrite(admin, sizeof(Administrador), 1, fp);
+		}
+	}
+	fclose(fp);
+	free(adminLido);
+}
+
+char* telaExcluirAdministrador(void) {
+    char *cpf;
+        cpf = (char*) malloc(12*sizeof(char));
     
     system("clear||cls");
     printf("\n");
@@ -223,4 +355,6 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return cpf;
 }

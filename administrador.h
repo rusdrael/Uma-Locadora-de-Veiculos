@@ -20,20 +20,30 @@ struct administrador{
     char email[51];
     char nasc[11];
     char celular[12];
-
+    int status;
 };
 
 ////////////////////////////////////////////////////
 // Assinatura das Funções do Módulo Administrador //
 ////////////////////////////////////////////////////
 
+void telaErroArquivoAdmin(void);
+
 void moduloAdministrador(void);
 char telaMenuAdministrador(void);
+
 Administrador* telaCadastrarAdministrador(void);
-void telaPesquisarAdministrador(void);
-void telaAtualizarAdministrador(void);
-void telaExcluirAdministrador(void);
 void cadastrarAdministrador(void);
+void gravarAdministrador(Administrador*);
+
 void pesquisarAdministrador(void);
+char* telaPesquisarAdministrador(void);
+Administrador* buscarAdministrador(char*);
+void exibirAdministrador(Administrador*);
+
 void atualizarAdministrador(void);
+char* telaAtualizarAdministrador(void);
+void regravarAdministrador(Administrador*);
+
 void excluirAdministrador(void);
+char* telaExcluirAdministrador(void);
