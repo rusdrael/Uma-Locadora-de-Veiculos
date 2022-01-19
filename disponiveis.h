@@ -19,20 +19,30 @@ struct disponiveis{
     char nomeVeic[51];
     char marcaVeic[51];
     char anoVeic[5];
-
+    int status;
 };
 
 ///////////////////////////////////////////////////////////
 // Assinatura das Funções do Módulo Veículos Disponíveis //
 ///////////////////////////////////////////////////////////
 
+void telaErroArquivoDisp(void);
+
 void moduloVeiculosDisp(void);
 char telaMenuVeiculosDisp(void);
+
 Disponiveis* telaCadastrarVeiculosDisp(void);
-void telaPesquisarVeiculosDisp(void);
-void telaAtualizarVeiculosDisp(void);
-void telaExcluirVeiculosDisp(void);
 void cadastrarVeiculosDisp(void);
+void gravarVeiculosDisp(Disponiveis*);
+
 void pesquisarVeiculosDisp(void);
+char* telaPesquisarVeiculosDisp(void);
+Disponiveis* buscarVeiculosDisp(char*);
+void exibirVeiculosDisp(Disponiveis*);
+
 void atualizarVeiculosDisp(void);
+char* telaAtualizarVeiculosDisp(void);
+void regravarVeiculosDisp(Disponiveis*);
+
 void excluirVeiculosDisp(void);
+char* telaExcluirVeiculosDisp(void);

@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <ctype.h>
 #include "disponiveis.h"
 #include "util.h"
@@ -38,23 +39,83 @@ void moduloVeiculosDisp(void) {
 
 void cadastrarVeiculosDisp(void) {
     Disponiveis* disp;
-
     disp = telaCadastrarVeiculosDisp();
+    gravarVeiculosDisp(disp);
     free(disp);
 }
 
 void pesquisarVeiculosDisp(void) {
-    telaPesquisarVeiculosDisp();
+    Disponiveis* disp;
+	char* placaVeic;
+
+	placaVeic = telaPesquisarVeiculosDisp();
+	disp = buscarVeiculosDisp(placaVeic);
+	exibirVeiculosDisp(disp);
+	free(disp); 
+	free(placaVeic);
 }
 
 void atualizarVeiculosDisp(void) {
-    telaAtualizarVeiculosDisp();
+    Disponiveis* disp;
+	char* placaVeic;
+
+	placaVeic = telaAtualizarVeiculosDisp();
+	disp = buscarVeiculosDisp(placaVeic);
+	if (disp == NULL) {
+    	printf("\n\nVeículo disponível não encontrado!\n\n");
+  	} else {
+		  disp = telaCadastrarVeiculosDisp();
+		  strcpy(disp->placaVeic, placaVeic);
+		  regravarVeiculosDisp(disp);
+		  free(disp);
+	}
+	free(placaVeic);
 }
 
 void excluirVeiculosDisp(void) {
-    telaExcluirVeiculosDisp();
+    Disponiveis* disp;
+	char *placaVeic;
+
+	placaVeic = telaExcluirVeiculosDisp();
+	disp = (Disponiveis*) malloc(sizeof(Disponiveis));
+	disp = buscarVeiculosDisp(placaVeic);
+	if (disp == NULL) {
+    	printf("\n\nVeículo disponível não encontrado!\n\n");
+  	} else {
+		  disp->status = False;
+		  regravarVeiculosDisp(disp);
+		  free(disp);
+	}
+	free(placaVeic);
 }
 
+void telaErroArquivoDisp(void) {
+	system("clear||cls");
+	printf("\n");
+	printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+    printf("///                                                                       ///\n");
+    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///           = = = = = = =  Ops! Ocorreu em erro = = = = = =             ///\n");
+	printf("///           = = =  Não foi possível acessar o arquivo = = =             ///\n");
+	printf("///           = = = = com informações sobre os veículos = = =             ///\n");
+	printf("///           = = = = = = = = = disponíveis = = = = = = = = =                ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///           = =  Pedimos desculpas pelos inconvenientes = =             ///\n");
+	printf("///           = = =  mas este programa será finalizado! = = =             ///\n");
+	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+	getchar();
+	exit(1);
+}
 
 char telaMenuVeiculosDisp(void) {
     char op;
@@ -107,7 +168,7 @@ Disponiveis* telaCadastrarVeiculosDisp(void) {
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
 do {    
-    printf("///           Placa (modelo Mercosul/letras maiúsculas): ");
+    printf("///           Placa (Apenas números e letras maiúsculas): ");
     scanf("%[^\n]", disp->placaVeic);
     getchar();
 } while (!validarPlacaVeic(disp->placaVeic));     
@@ -125,7 +186,8 @@ do {
     printf("///           Ano: ");
     scanf("%[^\n]", disp->anoVeic);
     getchar();
-} while (!validarAnoVeic(disp->anoVeic));     
+} while (!validarAnoVeic(disp->anoVeic));
+disp->status = True;      
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -134,9 +196,20 @@ do {
     return disp;
 }
 
+void gravarVeiculosDisp(Disponiveis* disp) {
+	FILE* fp;
 
-void telaPesquisarVeiculosDisp(void) {
-    char placaVeic[8];
+	fp = fopen("disponiveis.txt", "at");
+	if (fp == NULL) {
+		telaErroArquivoDisp();
+	}
+	fwrite(disp, sizeof(Disponiveis), 1, fp);
+	fclose(fp);
+}
+
+char* telaPesquisarVeiculosDisp(void) {
+    char* placaVeic;
+        placaVeic = (char*) malloc(8*sizeof(char));
 
     system("clear||cls");
     printf("\n");
@@ -153,7 +226,7 @@ void telaPesquisarVeiculosDisp(void) {
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
 do {
-    printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
+    printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
     scanf("%[^\n]", placaVeic);
     getchar();
 } while (!validarPlacaVeic(placaVeic));
@@ -161,11 +234,47 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return placaVeic;
 }
 
+Disponiveis* buscarVeiculosDisp(char* placaVeic) {
+    FILE* fp;
+    Disponiveis* disp;
 
-void telaAtualizarVeiculosDisp(void) {
-    char placaVeic[8];
+    disp = (Disponiveis*) malloc(sizeof(Disponiveis));
+    fp = fopen("disponiveis.txt", "rt");
+    if (fp == NULL) {
+        telaErroArquivoDisp();
+    }
+    while(fread(disp, sizeof(Disponiveis), 1, fp)) {
+        if ((strcmp(disp->placaVeic, placaVeic) == 0)  && (disp->status == True)) {
+            fclose(fp);
+            return disp;
+        }
+    }
+    fclose(fp);
+    return NULL;
+}
+
+void exibirVeiculosDisp(Disponiveis* disp) {
+
+    if (disp == NULL) {
+        printf("\n= = = Veículo disponível Inexistente = = =\n");
+    } else {
+        printf("\n= = = Veículo disponível Cadastrado = = =\n");
+        printf("Placa do veículo disponível: %s\n", disp->placaVeic);
+        printf("Nome do veículo disponível: %s\n", disp->nomeVeic);
+        printf("Marca do veículo disponível: %s\n", disp->marcaVeic);
+        printf("Ano do veículo disponível: %s\n", disp->anoVeic);
+        printf("Status: %i\n", disp->status);
+    }
+    getchar();
+}
+
+char* telaAtualizarVeiculosDisp(void) {
+    char* placaVeic;
+        placaVeic = (char*) malloc(8*sizeof(char));
 
     system("clear||cls");
     printf("\n");
@@ -182,7 +291,7 @@ void telaAtualizarVeiculosDisp(void) {
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
 do {
-    printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
+    printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
     scanf("%[^\n]", placaVeic);
     getchar();
 } while (!validarPlacaVeic(placaVeic));
@@ -190,11 +299,35 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return placaVeic;
 }
 
+void regravarVeiculosDisp(Disponiveis* disp) {
+	int achou;
+	FILE* fp;
+	Disponiveis* dispLido;
 
-void telaExcluirVeiculosDisp(void) {
-    char placaVeic[8];
+	dispLido = (Disponiveis*) malloc(sizeof(Disponiveis));
+	fp = fopen("disponiveis.txt", "r+t");
+	if (fp == NULL) {
+		telaErroArquivoDisp();
+	}
+	achou = False;
+	while(fread(dispLido, sizeof(Disponiveis), 1, fp) && !achou) {
+        if (strcmp(dispLido->placaVeic, disp->placaVeic) == 0) {
+			achou = 1;
+			fseek(fp, -1*sizeof(Disponiveis), SEEK_CUR);
+        fwrite(disp, sizeof(Disponiveis), 1, fp);
+		}
+	}
+	fclose(fp);
+	free(dispLido);
+}
+
+char* telaExcluirVeiculosDisp(void) {
+    char *placaVeic;
+        placaVeic = (char*) malloc(8*sizeof(char));
     
     system("clear||cls");
     printf("\n");
@@ -211,7 +344,7 @@ void telaExcluirVeiculosDisp(void) {
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
 do {
-    printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
+    printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
     scanf("%[^\n]", placaVeic);
     getchar();
 } while (!validarPlacaVeic(placaVeic));
@@ -219,4 +352,6 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return placaVeic;
 }
