@@ -202,7 +202,7 @@ Cliente* telaCadastrarCliente(void) {
 void gravarCliente(Cliente* cli) {
 	FILE* fp;
 
-	fp = fopen("clientes.txt", "at");
+	fp = fopen("clientes.dat", "ab");
 	if (fp == NULL) {
 		telaErroArquivo();
 	}
@@ -246,7 +246,7 @@ Cliente* buscarCliente(char* cpf) {
     Cliente* cli;
 
     cli = (Cliente*) malloc(sizeof(Cliente));
-    fp = fopen("clientes.txt", "rt");
+    fp = fopen("clientes.dat", "rb");
     if (fp == NULL) {
         telaErroArquivo();
     }
@@ -312,7 +312,7 @@ void regravarCliente(Cliente* cli) {
 	Cliente* cliLido;
 
 	cliLido = (Cliente*) malloc(sizeof(Cliente));
-	fp = fopen("clientes.txt", "r+t");
+	fp = fopen("clientes.dat", "r+b");
 	if (fp == NULL) {
 		telaErroArquivo();
 	}

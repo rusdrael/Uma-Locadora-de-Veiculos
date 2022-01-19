@@ -199,7 +199,7 @@ alug->status = True;
 void gravarVeiculosAlug(Alugados* alug) {
 	FILE* fp;
 
-	fp = fopen("alugados.txt", "at");
+	fp = fopen("alugados.dat", "ab");
 	if (fp == NULL) {
 		telaErroArquivoAlug();
 	}
@@ -243,7 +243,7 @@ Alugados* buscarVeiculosAlug(char* placaVeic) {
     Alugados* alug;
 
     alug = (Alugados*) malloc(sizeof(Alugados));
-    fp = fopen("alugados.txt", "rt");
+    fp = fopen("alugados.dat", "rb");
     if (fp == NULL) {
         telaErroArquivoAlug();
     }
@@ -309,7 +309,7 @@ void regravarVeiculosAlug(Alugados* alug) {
 	Alugados* alugLido;
 
 	alugLido = (Alugados*) malloc(sizeof(Alugados));
-	fp = fopen("alugados.txt", "r+t");
+	fp = fopen("alugados.dat", "r+b");
 	if (fp == NULL) {
 		telaErroArquivoAlug();
 	}

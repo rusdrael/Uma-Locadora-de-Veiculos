@@ -199,7 +199,7 @@ disp->status = True;
 void gravarVeiculosDisp(Disponiveis* disp) {
 	FILE* fp;
 
-	fp = fopen("disponiveis.txt", "at");
+	fp = fopen("disponiveis.dat", "ab");
 	if (fp == NULL) {
 		telaErroArquivoDisp();
 	}
@@ -243,7 +243,7 @@ Disponiveis* buscarVeiculosDisp(char* placaVeic) {
     Disponiveis* disp;
 
     disp = (Disponiveis*) malloc(sizeof(Disponiveis));
-    fp = fopen("disponiveis.txt", "rt");
+    fp = fopen("disponiveis.dat", "rb");
     if (fp == NULL) {
         telaErroArquivoDisp();
     }
@@ -309,7 +309,7 @@ void regravarVeiculosDisp(Disponiveis* disp) {
 	Disponiveis* dispLido;
 
 	dispLido = (Disponiveis*) malloc(sizeof(Disponiveis));
-	fp = fopen("disponiveis.txt", "r+t");
+	fp = fopen("disponiveis.dat", "r+b");
 	if (fp == NULL) {
 		telaErroArquivoDisp();
 	}

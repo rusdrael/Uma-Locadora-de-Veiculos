@@ -202,7 +202,7 @@ Administrador* telaCadastrarAdministrador(void) {
 void gravarAdministrador(Administrador* admin) {
 	FILE* fp;
 
-	fp = fopen("administradores.txt", "at");
+	fp = fopen("administradores.dat", "ab");
 	if (fp == NULL) {
 		telaErroArquivoAdmin();
 	}
@@ -246,7 +246,7 @@ Administrador* buscarAdministrador(char* cpf) {
     Administrador* admin;
 
     admin = (Administrador*) malloc(sizeof(Administrador));
-    fp = fopen("administradores.txt", "rt");
+    fp = fopen("administradores.dat", "rb");
     if (fp == NULL) {
         telaErroArquivoAdmin();
     }
@@ -312,7 +312,7 @@ void regravarAdministrador(Administrador* admin) {
 	Administrador* adminLido;
 
 	adminLido = (Administrador*) malloc(sizeof(Administrador));
-	fp = fopen("administradores.txt", "r+t");
+	fp = fopen("administradores.dat", "r+b");
 	if (fp == NULL) {
 		telaErroArquivoAdmin();
 	}
