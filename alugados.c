@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <ctype.h>
 #include "alugados.h"
 #include "util.h"
@@ -38,23 +39,83 @@ void moduloVeiculosAlug(void) {
 
 void cadastrarVeiculosAlug(void) {
     Alugados* alug;
-
     alug = telaCadastrarVeiculosAlug();
+    gravarVeiculosAlug(alug);
     free(alug);
 }
 
 void pesquisarVeiculosAlug(void) {
-    telaPesquisarVeiculosAlug();
+    Alugados* alug;
+	char* placaVeic;
+
+	placaVeic = telaPesquisarVeiculosAlug();
+	alug = buscarVeiculosAlug(placaVeic);
+	exibirVeiculosAlug(alug);
+	free(alug); 
+	free(placaVeic);
 }
 
 void atualizarVeiculosAlug(void) {
-    telaAtualizarVeiculosAlug();
+    Alugados* alug;
+	char* placaVeic;
+
+	placaVeic = telaAtualizarVeiculosAlug();
+	alug = buscarVeiculosAlug(placaVeic);
+	if (alug == NULL) {
+    	printf("\n\nVeículo Alugado não encontrado!\n\n");
+  	} else {
+		  alug = telaCadastrarVeiculosAlug();
+		  strcpy(alug->placaVeic, placaVeic);
+		  regravarVeiculosAlug(alug);
+		  free(alug);
+	}
+	free(placaVeic);
 }
 
 void excluirVeiculosAlug(void) {
-    telaExcluirVeiculosAlug();
+    Alugados* alug;
+	char *placaVeic;
+
+	placaVeic = telaExcluirVeiculosAlug();
+	alug = (Alugados*) malloc(sizeof(Alugados));
+	alug = buscarVeiculosAlug(placaVeic);
+	if (alug == NULL) {
+    	printf("\n\nVeículo Alugado não encontrado!\n\n");
+  	} else {
+		  alug->status = False;
+		  regravarVeiculosAlug(alug);
+		  free(alug);
+	}
+	free(placaVeic);
 }
 
+void telaErroArquivoAlug(void) {
+	system("clear||cls");
+	printf("\n");
+	printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+    printf("///                                                                       ///\n");
+    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///           = = = = = = =  Ops! Ocorreu em erro = = = = = =             ///\n");
+	printf("///           = = =  Não foi possível acessar o arquivo = = =             ///\n");
+	printf("///           = = = = com informações sobre os veículos = = =             ///\n");
+	printf("///           = = = = = = = = = alugados  = = = = = = = = = =               ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///           = =  Pedimos desculpas pelos inconvenientes = =             ///\n");
+	printf("///           = = =  mas este programa será finalizado! = = =             ///\n");
+	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+	getchar();
+	exit(1);
+}
 
 char telaMenuVeiculosAlug(void) {
     char op;
@@ -107,7 +168,7 @@ Alugados* telaCadastrarVeiculosAlug(void) {
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
 do {    
-    printf("///           Placa (modelo Mercosul/letras maiúsculas): ");
+    printf("///           Placa (Apenas números e letras maiúsculas): ");
     scanf("%[^\n]", alug->placaVeic);
     getchar();
 } while (!validarPlacaVeic(alug->placaVeic));     
@@ -125,7 +186,8 @@ do {
     printf("///           Ano: ");
     scanf("%[^\n]", alug->anoVeic);
     getchar();
-} while (!validarAnoVeic(alug->anoVeic));     
+} while (!validarAnoVeic(alug->anoVeic));
+alug->status = True;     
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -134,9 +196,20 @@ do {
     return alug;
 }
 
+void gravarVeiculosAlug(Alugados* alug) {
+	FILE* fp;
 
-void telaPesquisarVeiculosAlug(void) {
-    char placaVeic[8];
+	fp = fopen("alugados.txt", "at");
+	if (fp == NULL) {
+		telaErroArquivoAlug();
+	}
+	fwrite(alug, sizeof(Alugados), 1, fp);
+	fclose(fp);
+}
+
+char* telaPesquisarVeiculosAlug(void) {
+    char* placaVeic;
+        placaVeic = (char*) malloc(8*sizeof(char));
 
     system("clear||cls");
     printf("\n");
@@ -153,7 +226,7 @@ void telaPesquisarVeiculosAlug(void) {
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
 do {
-    printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
+    printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
     scanf("%[^\n]", placaVeic);
     getchar();
 } while (!validarPlacaVeic(placaVeic));
@@ -161,11 +234,47 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return placaVeic;
 }
 
+Alugados* buscarVeiculosAlug(char* placaVeic) {
+    FILE* fp;
+    Alugados* alug;
 
-void telaAtualizarVeiculosAlug(void) {
-    char placaVeic[8];
+    alug = (Alugados*) malloc(sizeof(Alugados));
+    fp = fopen("alugados.txt", "rt");
+    if (fp == NULL) {
+        telaErroArquivoAlug();
+    }
+    while(fread(alug, sizeof(Alugados), 1, fp)) {
+        if ((strcmp(alug->placaVeic, placaVeic) == 0)  && (alug->status == True)) {
+            fclose(fp);
+            return alug;
+        }
+    }
+    fclose(fp);
+    return NULL;
+}
+
+void exibirVeiculosAlug(Alugados* alug) {
+
+    if (alug == NULL) {
+        printf("\n= = = Veículo alugado Inexistente = = =\n");
+    } else {
+        printf("\n= = = Veículo alugado Cadastrado = = =\n");
+        printf("Placa do veículo alugado: %s\n", alug->placaVeic);
+        printf("Nome do veículo alugado: %s\n", alug->nomeVeic);
+        printf("Marca do veículo alugado: %s\n", alug->marcaVeic);
+        printf("Ano do veículo alugado: %s\n", alug->anoVeic);
+        printf("Status: %i\n", alug->status);
+    }
+    getchar();
+}
+
+char* telaAtualizarVeiculosAlug(void) {
+    char* placaVeic;
+        placaVeic = (char*) malloc(8*sizeof(char));
 
     system("clear||cls");
     printf("\n");
@@ -182,7 +291,7 @@ void telaAtualizarVeiculosAlug(void) {
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
 do {
-    printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
+    printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
     scanf("%[^\n]", placaVeic);
     getchar();
 } while (!validarPlacaVeic(placaVeic));
@@ -190,11 +299,35 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return placaVeic;
 }
 
+void regravarVeiculosAlug(Alugados* alug) {
+	int achou;
+	FILE* fp;
+	Alugados* alugLido;
 
-void telaExcluirVeiculosAlug(void) {
-    char placaVeic[8];
+	alugLido = (Alugados*) malloc(sizeof(Alugados));
+	fp = fopen("alugados.txt", "r+t");
+	if (fp == NULL) {
+		telaErroArquivoAlug();
+	}
+	achou = False;
+	while(fread(alugLido, sizeof(Alugados), 1, fp) && !achou) {
+        if (strcmp(alugLido->placaVeic, alug->placaVeic) == 0) {
+			achou = 1;
+			fseek(fp, -1*sizeof(Alugados), SEEK_CUR);
+        fwrite(alug, sizeof(Alugados), 1, fp);
+		}
+	}
+	fclose(fp);
+	free(alugLido);
+}
+
+char* telaExcluirVeiculosAlug(void) {
+    char *placaVeic;
+        placaVeic = (char*) malloc(8*sizeof(char));
     
     system("clear||cls");
     printf("\n");
@@ -211,7 +344,7 @@ void telaExcluirVeiculosAlug(void) {
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
 do {
-    printf("///           Informe a placa (modelo Mercosul/letras maiúsculas): ");
+    printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
     scanf("%[^\n]", placaVeic);
     getchar();
 } while (!validarPlacaVeic(placaVeic));
@@ -219,4 +352,6 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return placaVeic;
 }

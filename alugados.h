@@ -19,20 +19,30 @@ struct alugados{
     char nomeVeic[51];
     char marcaVeic[51];
     char anoVeic[5];
-
+    int status;
 };
 
 ////////////////////////////////////////////////////////
 // Assinatura das Funções do Módulo Veículos Alugados //
 ////////////////////////////////////////////////////////
 
+void telaErroArquivoAlug(void);
+
 void moduloVeiculosAlug(void);
 char telaMenuVeiculosAlug(void);
+
 Alugados* telaCadastrarVeiculosAlug(void);
-void telaPesquisarVeiculosAlug(void);
-void telaAtualizarVeiculosAlug(void);
-void telaExcluirVeiculosAlug(void);
 void cadastrarVeiculosAlug(void);
+void gravarVeiculosAlug(Alugados*);
+
 void pesquisarVeiculosAlug(void);
+char* telaPesquisarVeiculosAlug(void);
+Alugados* buscarVeiculosAlug(char*);
+void exibirVeiculosAlug(Alugados*);
+
 void atualizarVeiculosAlug(void);
+char* telaAtualizarVeiculosAlug(void);
+void regravarVeiculosAlug(Alugados*);
+
 void excluirVeiculosAlug(void);
+char* telaExcluirVeiculosAlug(void);
