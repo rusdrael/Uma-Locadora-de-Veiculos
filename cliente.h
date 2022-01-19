@@ -20,20 +20,30 @@ struct cliente{
     char email[51];
     char nasc[11];
     char celular[12];
-
+    int status;
 };
 
 //////////////////////////////////////////////
 // Assinatura das Funções do Módulo Cliente //
 //////////////////////////////////////////////
 
+void telaErroArquivo(void);
+
 void moduloCliente(void);
 char telaMenuCliente(void);
+
 Cliente* telaCadastrarCliente(void);
-void telaPesquisarCliente(void);
-void telaAtualizarCliente(void);
-void telaExcluirCliente(void);
 void cadastrarCliente(void);
+void gravarCliente(Cliente*);
+
 void pesquisarCliente(void);
+char* telaPesquisarCliente(void);
+Cliente* buscarCliente(char*);
+void exibirCliente(Cliente*);
+
 void atualizarCliente(void);
+char* telaAtualizarCliente(void);
+void regravarCliente(Cliente*);
+
 void excluirCliente(void);
+char* telaExcluirCliente(void);

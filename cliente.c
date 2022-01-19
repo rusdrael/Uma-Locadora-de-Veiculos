@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "cliente.h"
 #include "util.h"
 
@@ -37,23 +38,82 @@ void moduloCliente(void) {
 
 void cadastrarCliente(void) {
     Cliente* cli;
-
     cli = telaCadastrarCliente();
+    gravarCliente(cli);
     free(cli);
 }
 
 void pesquisarCliente(void) {
-    telaPesquisarCliente();
+    Cliente* cli;
+	char* cpf;
+
+	cpf = telaPesquisarCliente();
+	cli = buscarCliente(cpf);
+	exibirCliente(cli);
+	free(cli); 
+	free(cpf);
 }
 
 void atualizarCliente(void) {
-    telaAtualizarCliente();
+    Cliente* cli;
+	char* cpf;
+
+	cpf = telaAtualizarCliente();
+	cli = buscarCliente(cpf);
+	if (cli == NULL) {
+    	printf("\n\nCliente não encontrado!\n\n");
+  	} else {
+		  cli = telaCadastrarCliente();
+		  strcpy(cli->cpf, cpf);
+		  regravarCliente(cli);
+		  free(cli);
+	}
+	free(cpf);
 }
 
 void excluirCliente(void) {
-    telaExcluirCliente();
+    Cliente* cli;
+	char *cpf;
+
+	cpf = telaExcluirCliente();
+	cli = (Cliente*) malloc(sizeof(Cliente));
+	cli = buscarCliente(cpf);
+	if (cli == NULL) {
+    	printf("\n\nCliente não encontrado!\n\n");
+  	} else {
+		  cli->status = False;
+		  regravarCliente(cli);
+		  free(cli);
+	}
+	free(cpf);
 }
 
+void telaErroArquivo(void) {
+	system("clear||cls");
+	printf("\n");
+	printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+    printf("///                                                                       ///\n");
+    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///           = = = = = = =  Ops! Ocorreu em erro = = = = = =             ///\n");
+	printf("///           = = =  Não foi possível acessar o arquivo = = =             ///\n");
+	printf("///           = = = = com informações sobre os clientes = = =             ///\n");
+	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///           = =  Pedimos desculpas pelos inconvenientes = =             ///\n");
+	printf("///           = = =  mas este programa será finalizado! = = =             ///\n");
+	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+	getchar();
+	exit(1);
+}
 
 char telaMenuCliente(void) {
     char op;
@@ -109,7 +169,7 @@ Cliente* telaCadastrarCliente(void) {
         printf("///           CPF (apenas números): ");
         scanf("%[^\n]", cli->cpf);
         getchar();
-    } while (!validarCpf(cli->cpf)); 
+    } while (!validarCpf(cli->cpf));
     do {
         printf("///           Nome completo: ");
         scanf("%[^\n]", cli->nome);
@@ -130,6 +190,7 @@ Cliente* telaCadastrarCliente(void) {
         scanf("%[^\n]", cli->celular);
         getchar();
     } while (!validarCelular(cli->celular));
+    cli->status = True;
         printf("///                                                                       ///\n");
         printf("///                                                                       ///\n");
         printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -138,9 +199,20 @@ Cliente* telaCadastrarCliente(void) {
         return cli;
 }
 
+void gravarCliente(Cliente* cli) {
+	FILE* fp;
 
-void telaPesquisarCliente(void) {
-    char cpf[12];
+	fp = fopen("clientes.txt", "at");
+	if (fp == NULL) {
+		telaErroArquivo();
+	}
+	fwrite(cli, sizeof(Cliente), 1, fp);
+	fclose(fp);
+}
+
+char* telaPesquisarCliente(void) {
+    char* cpf;
+        cpf = (char*) malloc(12*sizeof(char));
 
     system("clear||cls");
     printf("\n");
@@ -165,11 +237,47 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return cpf;
 }
 
+Cliente* buscarCliente(char* cpf) {
+    FILE* fp;
+    Cliente* cli;
 
-void telaAtualizarCliente(void) {
-    char cpf[12];
+    cli = (Cliente*) malloc(sizeof(Cliente));
+    fp = fopen("clientes.txt", "rt");
+    if (fp == NULL) {
+        telaErroArquivo();
+    }
+    while(fread(cli, sizeof(Cliente), 1, fp)) {
+        if ((strcmp(cli->cpf, cpf) == 0)  && (cli->status == True)) {
+            fclose(fp);
+            return cli;
+        }
+    }
+    fclose(fp);
+    return NULL;
+}
+
+void exibirCliente(Cliente* cli) {
+
+    if (cli == NULL) {
+        printf("\n= = = Cliente Inexistente = = =\n");
+    } else {
+        printf("\n= = = Cliente Cadastrado = = =\n");
+        printf("CPF: %s\n", cli->cpf);
+        printf("Nome do cliente: %s\n", cli->nome);
+        printf("E-mail: %s\n", cli->email);
+        printf("Celular: %s\n", cli->celular);
+        printf("Status: %i\n", cli->status);
+    }
+    getchar();
+}
+
+char* telaAtualizarCliente(void) {
+    char* cpf;
+        cpf = (char*) malloc(12*sizeof(char));
 
     system("clear||cls");
     printf("\n");
@@ -194,11 +302,35 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return cpf;
 }
 
+void regravarCliente(Cliente* cli) {
+	int achou;
+	FILE* fp;
+	Cliente* cliLido;
 
-void telaExcluirCliente(void) {
-    char cpf[12];
+	cliLido = (Cliente*) malloc(sizeof(Cliente));
+	fp = fopen("clientes.txt", "r+t");
+	if (fp == NULL) {
+		telaErroArquivo();
+	}
+	achou = False;
+	while(fread(cliLido, sizeof(Cliente), 1, fp) && !achou) {
+        if (strcmp(cliLido->cpf, cli->cpf) == 0) {
+			achou = 1;
+			fseek(fp, -1*sizeof(Cliente), SEEK_CUR);
+        fwrite(cli, sizeof(Cliente), 1, fp);
+		}
+	}
+	fclose(fp);
+	free(cliLido);
+}
+
+char* telaExcluirCliente(void) {
+    char *cpf;
+        cpf = (char*) malloc(12*sizeof(char));
     
     system("clear||cls");
     printf("\n");
@@ -223,4 +355,6 @@ do {
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
+
+    return cpf;
 }
