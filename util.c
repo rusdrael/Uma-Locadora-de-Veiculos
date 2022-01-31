@@ -362,3 +362,19 @@ int validarAnoVeic(char* anoVeic) {
   }
   return 1;
 }
+
+/////////////////////////
+// Validar Confirmação //
+/////////////////////////
+
+int validaConfirmacao(char confirmacao[2]){
+if (confirmacao[0] == 'S' || confirmacao[0] == 's'){
+  return 1;
+
+}else if (confirmacao[0] == 'N' || confirmacao[0] == 'n'){
+  return 1;
+}
+else{
+  return 0;
+}
+}

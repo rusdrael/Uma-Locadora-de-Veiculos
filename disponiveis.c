@@ -75,16 +75,31 @@ void atualizarVeiculosDisp(void) {
 void excluirVeiculosDisp(void) {
     Disponiveis* disp;
 	char *placaVeic;
-
-	placaVeic = telaExcluirVeiculosDisp();
+  char confirmacao[2];
+	placaVeic = telaExcluirDisp();
 	disp = (Disponiveis*) malloc(sizeof(Disponiveis));
-	disp = buscarVeiculosDisp(placaVeic);
+	disp = buscarDisp(placaVeic);
 	if (disp == NULL) {
-    	printf("\n\nVeículo disponível não encontrado!\n\n");
-  	} else {
-		  disp->status = False;
-		  regravarVeiculosDisp(disp);
-		  free(disp);
+    printf("\n\nVeículo disponível não encontrado!\n\n");
+  } 
+  else {
+    printf("Digite 's' para continuar a exclusão ou 'n' para interromper: ");
+    scanf("%[^\n]", confirmacao);
+    getchar();
+    while (validaConfirmacao(confirmacao) == 0){
+      printf("///           Ação inválida!: ");
+      scanf("%[^\n]", confirmacao);
+	    getchar();
+    }
+    if (confirmacao[0] == 'S' || confirmacao[0] == 's'){
+		  disp->status = 'X';
+		  regravarDisp(disp);
+      free(disp);
+		  
+    }
+    else if(confirmacao[0] == 'N' || confirmacao[0] == 'n'){
+      printf("Ação interrompida!");
+    }
 	}
 	free(placaVeic);
 }

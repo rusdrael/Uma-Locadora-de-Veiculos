@@ -72,18 +72,33 @@ void atualizarCliente(void) {
 }
 
 void excluirCliente(void) {
-    Cliente* cli;
+   Cliente* cli;
 	char *cpf;
-
+  char confirmacao[2];
 	cpf = telaExcluirCliente();
 	cli = (Cliente*) malloc(sizeof(Cliente));
 	cli = buscarCliente(cpf);
 	if (cli == NULL) {
-    	printf("\n\nCliente não encontrado!\n\n");
-  	} else {
-		  cli->status = False;
+    printf("\n\nCliente não encontrado!\n\n");
+  } 
+  else {
+    printf("Digite 's' para continuar a exclusão ou 'n' para interromper: ");
+    scanf("%[^\n]", confirmacao);
+    getchar();
+    while (validaConfirmacao(confirmacao) == 0){
+      printf("///           Ação inválida!: ");
+      scanf("%[^\n]", confirmacao);
+	    getchar();
+    }
+    if (confirmacao[0] == 'S' || confirmacao[0] == 's'){
+		  cli->status = 'X';
 		  regravarCliente(cli);
-		  free(cli);
+      free(cli);
+		  
+    }
+    else if(confirmacao[0] == 'N' || confirmacao[0] == 'n'){
+      printf("Ação interrompida!");
+    }
 	}
 	free(cpf);
 }

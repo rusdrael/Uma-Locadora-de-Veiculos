@@ -74,16 +74,31 @@ void atualizarAdministrador(void) {
 void excluirAdministrador(void) {
     Administrador* admin;
 	char *cpf;
-
+  char confirmacao[2];
 	cpf = telaExcluirAdministrador();
 	admin = (Administrador*) malloc(sizeof(Administrador));
 	admin = buscarAdministrador(cpf);
 	if (admin == NULL) {
-    	printf("\n\nAdministrador não encontrado!\n\n");
-  	} else {
-		  admin->status = False;
+    printf("\n\nAdministrador não encontrado!\n\n");
+  } 
+  else {
+    printf("Digite 's' para continuar a exclusão ou 'n' para interromper: ");
+    scanf("%[^\n]", confirmacao);
+    getchar();
+    while (validaConfirmacao(confirmacao) == 0){
+      printf("///           Ação inválida!: ");
+      scanf("%[^\n]", confirmacao);
+	    getchar();
+    }
+    if (confirmacao[0] == 'S' || confirmacao[0] == 's'){
+		  admin->status = 'X';
 		  regravarAdministrador(admin);
-		  free(admin);
+      free(admin);
+		  
+    }
+    else if(confirmacao[0] == 'N' || confirmacao[0] == 'n'){
+      printf("Ação interrompida!");
+    }
 	}
 	free(cpf);
 }

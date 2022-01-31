@@ -30,3 +30,4 @@ int validarPlacaVeic(char*);
 int validarNomeVeic(char*);
 int validarMarcaVeic(char*);
 int validarAnoVeic(char*);
+int validaConfirmacao(char[]);
