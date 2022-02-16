@@ -203,7 +203,7 @@ Veiculos* telaCadastrarVeiculos(int tipo) {
     else{
         veic = (Veiculos*) malloc(sizeof(Veiculos));
         strcpy(veic->placaVeic, placa);
-            printf("///           Nome:");
+            printf("///           Nome: ");
         scanf("%[^\n]", veic->nomeVeic);
         getchar();
         while (validarNomeVeic(veic->nomeVeic) == 0){
@@ -222,7 +222,7 @@ Veiculos* telaCadastrarVeiculos(int tipo) {
             printf("///           Ano: ");
         scanf("%[^\n]", veic->anoVeic);
         getchar();
-        while (!validarAnoVeic(veic->anoVeic) == 0){
+        while (validarAnoVeic(veic->anoVeic) == 0){
             printf("///           Ano inválido!: ");
             scanf("%[^\n]", veic->anoVeic);
             getchar();
