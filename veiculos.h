@@ -50,4 +50,4 @@ void regravarVeiculos(Veiculos*);
 void excluirVeiculos(void);
 char* telaExcluirVeiculos(void);
 
-Veiculos* buscarVeiculosCadastro(char*);
+Veiculos* buscarVeiculosCadastrado(char*);

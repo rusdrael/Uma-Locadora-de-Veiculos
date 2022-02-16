@@ -51,7 +51,7 @@ void clientesCadastrados(void) {
     telaClientesCadastrados();
 }
 
-void veiculosCadastradas(void) {
+void veiculosCadastrados(void) {
 
     telaVeiculosCadastrados();
 }
@@ -67,11 +67,11 @@ void locacoesPorCPF(void) {
 
 void locacoesPorPlaca(void) {
 
-    char* placaVeic;
+    char* placa;
 
-	  placaVeic = telaPesquisarVeiculos();
-    relatLocacoesPorPlaca(placaVeic);
-    free(placaVeic);
+	  placa = telaPesquisarVeiculos();
+    relatLocacoesPorPlaca(placa);
+    free(placa);
 }
 
 void veiculosDisponiveis(void) {
@@ -142,7 +142,7 @@ void listaHistoricoLocacoes(void) {
     fp = fopen("locacoes.dat", "rb");
     while (fread(loc, sizeof(Locacao), 1, fp)) {
       printf("///           Data: %s                                                    ///\n", loc->data);
-      printf("///           CPF: %s                                                     ///\n", loc->cpf);
+      printf("///           CPF: %s                                                     ///\n", loc->cpfCliente);
       printf("///           Placa do veículo: %s                                        ///\n", loc->placaVeic);
       printf("///           Valor: %.2f                                                 ///\n", loc->valorPago);
       if (loc->status == 'N'){
@@ -163,7 +163,7 @@ void listaClientesCadastrados(void) {
     fp = fopen("clientes.dat", "rb");
     while (fread(cli, sizeof(Cliente), 1, fp)) {
       if(cli->status == 'C'){
-        printf("///           CPF: %s                                                     ///\n", cli->cpf);
+        printf("///           CPF: %s                                                     ///\n", cli->cpfCliente);
         printf("///           Nome: %s                                                    ///\n", cli->nome);
         printf("///           Email: %s                                                   ///\n", cli->email);
         printf("///           Data de Nascimento: %s                                      ///\n", cli->nasc);
@@ -222,7 +222,7 @@ void listaVeiculosCadastrados(void) {
       }     
     }
     fclose(fp);
-    free(veic);
+    ///free(veic);
 }
 
 void telaVeiculosCadastrados(void) {
@@ -279,7 +279,7 @@ void listaLocacoesPorCPF(char* cpf) {
     loc = (Locacao*) malloc(sizeof(Locacao));
     fp = fopen("locacoes.dat", "rb");
     while (fread(loc, sizeof(Locacao), 1, fp)) {
-      if(strcmp(loc->cpf, cpf) == 0){
+      if(strcmp(loc->cpfCliente, cpf) == 0){
         printf("///           Data: %s                                                    ///\n", loc->data);
         printf("///           Placa do Veículo: %s                                        ///\n", loc->placaVeic);
         printf("///           Valor: %.2f                                                 ///\n", loc->valorPago);
@@ -295,7 +295,7 @@ void listaLocacoesPorCPF(char* cpf) {
     free(loc);
 }
 
-void relatLocacoesPorPlaca(char* placaVeic) {
+void relatLocacoesPorPlaca(char* placa) {
     system("clear||cls");
     printf("\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -307,11 +307,11 @@ void relatLocacoesPorPlaca(char* placaVeic) {
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                       ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-    printf("///           = = = = = = = Placa: %s = = = = = =             ///\n", placaVeic);
+    printf("///           = = = = = = = Placa: %s = = = = = =             ///\n", placa);
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
     printf("///           Histórico de Locações:                                      ///\n");
-    listaLocacoesPorPlaca(placaVeic);
+    listaLocacoesPorPlaca(placa);
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -319,15 +319,15 @@ void relatLocacoesPorPlaca(char* placaVeic) {
     getchar();
 }
 
-void listaLocacoesPorPlaca(char* placaVeic) {
+void listaLocacoesPorPlaca(char* placa) {
     FILE* fp;
     Locacao* loc;
     loc = (Locacao*) malloc(sizeof(Locacao));
     fp = fopen("locacoes.dat", "rb");
     while (fread(loc, sizeof(Locacao), 1, fp)) {
-      if(strcmp(loc->placaVeic, placaVeic) == 0){
+      if(strcmp(loc->placaVeic, placa) == 0){
         printf("///           Data: %s                                                    ///\n", loc->data);
-        printf("///           CPF: %s                                                     ///\n", loc->cpf);
+        printf("///           CPF: %s                                                     ///\n", loc->cpfCliente);
         printf("///           Valor: %.2f                                                 ///\n", loc->valorPago);
         if (loc->status == 'N'){
           printf("///           Pagamento pendente                                          ///\n -----------------------------------------------------------------------------\n");

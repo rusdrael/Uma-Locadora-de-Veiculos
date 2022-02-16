@@ -54,39 +54,39 @@ void cadastrarVeiculos(void) {
 
 void pesquisarVeiculos(void) {
     Veiculos* veic;
-	char* placaVeic;
+	char* placa;
 
-	placaVeic = telaPesquisarVeiculos();
-	veic = buscarVeiculos(placaVeic);
+	placa = telaPesquisarVeiculos();
+	veic = buscarVeiculos(placa);
 	exibirVeiculos(veic);
 	free(veic); 
-	free(placaVeic);
+	free(placa);
 }
 
 void atualizarVeiculos(void) {
     Veiculos* veic;
-	char* placaVeic;
+	char* placa;
 
-	placaVeic = telaAtualizarVeiculos();
-	veic = buscarVeiculos(placaVeic);
+	placa = telaAtualizarVeiculos();
+	veic = buscarVeiculos(placa);
 	if (veic == NULL) {
     	printf("\n\nVeículo não encontrado!\n\n");
   	} else {
 		  veic = telaCadastrarVeiculos(2);
-		  strcpy(veic->placaVeic, placaVeic);
+		  strcpy(veic->placaVeic, placa);
 		  regravarVeiculos(veic);
 	}
     free(veic);
-	free(placaVeic);
+	free(placa);
 }
 
 void excluirVeiculos(void) {
     Veiculos* veic;
-	char *placaVeic;
+	char *placa;
   char confirmacao[2];
-	placaVeic = telaExcluirVeiculos();
+	placa = telaExcluirVeiculos();
 	veic = (Veiculos*) malloc(sizeof(Veiculos));
-	veic = buscarVeiculos(placaVeic);
+	veic = buscarVeiculos(placa);
 	if (veic == NULL) {
         printf("\n\nVeículo não encontrado!\n\n");
     } 
@@ -108,7 +108,7 @@ void excluirVeiculos(void) {
       printf("Ação interrompida!");
     }
 	}
-	free(placaVeic);
+	free(placa);
 }
 
 void telaErroArquivoVeic(void) {
@@ -172,7 +172,7 @@ char telaMenuVeiculos(void) {
 
 Veiculos* telaCadastrarVeiculos(int tipo) {
     Veiculos* veic;
-        char placaVeic[8];
+        char placa[8];
 
     system("clear||cls");
     printf("\n");
@@ -189,20 +189,20 @@ Veiculos* telaCadastrarVeiculos(int tipo) {
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");   
     printf("///           Placa (Apenas números e letras maiúsculas): ");
-    scanf("%[^\n]", placaVeic);
+    scanf("%[^\n]", placa);
     getchar();
-    while (validarPlacaVeic(placaVeic) == 0){
+    while (validarPlacaVeic(placa) == 0){
         printf("///       Placa inválida!: ");
-        scanf("%[^\n]", placaVeic);
+        scanf("%[^\n]", placa);
         getchar();
     }
-    if((buscarVeiculosCadastro(placaVeic) !=NULL) && (tipo == 1) ){
+    if((buscarVeiculosCadastrado(placa) !=NULL) && (tipo == 1) ){
         return NULL;
         free(veic);
     }
     else{
         veic = (Veiculos*) malloc(sizeof(Veiculos));
-        strcpy(veic->placaVeic, placaVeic);
+        strcpy(veic->placaVeic, placa);
             printf("///           Nome:");
         scanf("%[^\n]", veic->nomeVeic);
         getchar();
@@ -259,8 +259,8 @@ void gravarVeiculos(Veiculos* veic) {
 }
 
 char* telaPesquisarVeiculos(void) {
-    char* placaVeic;
-        placaVeic = (char*) malloc(8*sizeof(char));
+    char* placa;
+        placa = (char*) malloc(8*sizeof(char));
 
     system("clear||cls");
     printf("\n");
@@ -278,18 +278,18 @@ char* telaPesquisarVeiculos(void) {
     printf("///                                                                       ///\n");
 do {
     printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
-    scanf("%[^\n]", placaVeic);
+    scanf("%[^\n]", placa);
     getchar();
-} while (!validarPlacaVeic(placaVeic));
+} while (!validarPlacaVeic(placa));
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
 
-    return placaVeic;
+    return placa;
 }
 
-Veiculos* buscarVeiculos(char* placaVeic) {
+Veiculos* buscarVeiculos(char* placa) {
     FILE* fp;
     Veiculos* veic;
 
@@ -300,7 +300,7 @@ Veiculos* buscarVeiculos(char* placaVeic) {
     }
     while(!feof(fp)) {
         fread(veic, sizeof(Veiculos), 1, fp);
-        if ((strcmp(veic->placaVeic, placaVeic) == 0)  && (veic->statusCadastro == "C")) {
+        if ((strcmp(veic->placaVeic, placa) == 0)  && (veic->statusCadastro == 'C')) {
             fclose(fp);
             return veic;
         }
@@ -320,7 +320,7 @@ void exibirVeiculos(Veiculos* veic) {
         printf("Marca do veículo: %s\n", veic->marcaVeic);
         printf("Ano do veículo: %s\n", veic->anoVeic);
         printf("Valor: %.2f\n", veic->valor);
-        printf("Quantidade de Aluguéis; %i\n", veic->quantidadeAlugueis);
+        printf("Quantidade de Aluguéis: %i\n", veic->quantidadeAlugueis);
         if(veic->status == 'D'){
             printf("Disponível\n");
         }
@@ -332,8 +332,8 @@ void exibirVeiculos(Veiculos* veic) {
 }
 
 char* telaAtualizarVeiculos(void) {
-    char* placaVeic;
-        placaVeic = (char*) malloc(8*sizeof(char));
+    char* placa;
+        placa = (char*) malloc(8*sizeof(char));
 
     system("clear||cls");
     printf("\n");
@@ -351,15 +351,15 @@ char* telaAtualizarVeiculos(void) {
     printf("///                                                                       ///\n");
 do {
     printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
-    scanf("%[^\n]", placaVeic);
+    scanf("%[^\n]", placa);
     getchar();
-} while (!validarPlacaVeic(placaVeic));
+} while (!validarPlacaVeic(placa));
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
 
-    return placaVeic;
+    return placa;
 }
 
 void regravarVeiculos(Veiculos* veic) {
@@ -385,8 +385,8 @@ void regravarVeiculos(Veiculos* veic) {
 }
 
 char* telaExcluirVeiculos(void) {
-    char *placaVeic;
-        placaVeic = (char*) malloc(8*sizeof(char));
+    char *placa;
+        placa = (char*) malloc(8*sizeof(char));
     
     system("clear||cls");
     printf("\n");
@@ -404,18 +404,18 @@ char* telaExcluirVeiculos(void) {
     printf("///                                                                       ///\n");
 do {
     printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
-    scanf("%[^\n]", placaVeic);
+    scanf("%[^\n]", placa);
     getchar();
-} while (!validarPlacaVeic(placaVeic));
+} while (!validarPlacaVeic(placa));
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
 
-    return placaVeic;
+    return placa;
 }
 
-Veiculos* buscarVeiculosCadastro(char* placaVeic) {
+Veiculos* buscarVeiculosCadastrado(char* placa) {
   FILE* fp;
   Veiculos* veic;
 
@@ -426,7 +426,7 @@ Veiculos* buscarVeiculosCadastro(char* placaVeic) {
   }
   while(!feof(fp)) {
     fread(veic, sizeof(Veiculos), 1, fp);
-    if (strcmp(veic->placaVeic, placaVeic) == 0  && (veic->statusCadastro == 'C')) {
+    if (strcmp(veic->placaVeic, placa) == 0  && (veic->statusCadastro == 'C')) {
       fclose(fp);
       return veic;
     }

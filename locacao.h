@@ -15,8 +15,8 @@ typedef struct locacao Locacao;
 #include <time.h>
 struct locacao{
 
-    char cpf[12];
-    char placaVeic[51];
+    char cpfCliente[12];
+    char placaVeic[8];
     char data[30];
     float valorPago;
     char status;

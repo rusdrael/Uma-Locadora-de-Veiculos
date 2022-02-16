@@ -14,6 +14,7 @@
 #include "locacao.h"
 #include "relatorios.h"
 #include "info.h"
+#include "util.h"
 
 ////////////////////////////
 // Assinatura das funções //

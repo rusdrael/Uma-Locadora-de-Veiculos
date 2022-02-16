@@ -71,10 +71,10 @@ void atualizarCliente(void) {
     	printf("\n\nCliente não encontrado!\n\n");
   	} else {
 		  cli = telaCadastrarCliente(2);
-		  strcpy(cli->cpf, cpf);
+		  strcpy(cli->cpfCliente, cpf);
 		  regravarCliente(cli);
-		  free(cli);
 	}
+    free(cli);
 	free(cpf);
 }
 
@@ -195,13 +195,13 @@ Cliente* telaCadastrarCliente(int tipo) {
         scanf("%[^\n]", cpf);
         getchar();
     } 
-    if((buscarClienteCadastro(cpf) !=NULL) && (tipo == 1) ){
+    if((buscarClienteCadastrado(cpf) !=NULL) && (tipo == 1) ){
         return NULL;
         free(cli);
     }
     else{
         cli = (Cliente*) malloc(sizeof(Cliente));
-        strcpy(cli->cpf, cpf);
+        strcpy(cli->cpfCliente, cpf);
             printf("///           Nome:");
         scanf("%[^\n]", cli->nome);
         getchar();
@@ -298,7 +298,7 @@ Cliente* buscarCliente(char* cpf) {
     }
     while(!feof(fp)) {
         fread(cli, sizeof(Cliente), 1, fp);
-        if ((strcmp(cli->cpf, cpf) == 0)  && (cli->status == "C")) {
+        if ((strcmp(cli->cpfCliente, cpf) == 0)  && (cli->status == 'C')) {
             fclose(fp);
             return cli;
         }
@@ -313,7 +313,7 @@ void exibirCliente(Cliente* cli) {
         printf("\n= = = Cliente Inexistente = = =\n");
     } else {
         printf("\n= = = Cliente Cadastrado = = =\n");
-        printf("CPF: %s\n", cli->cpf);
+        printf("CPF: %s\n", cli->cpfCliente);
         printf("Nome do cliente: %s\n", cli->nome);
         printf("E-mail: %s\n", cli->email);
         printf("Celular: %s\n", cli->celular);
@@ -365,7 +365,7 @@ void regravarCliente(Cliente* cli) {
 	}
 	achou = 0;
 	while(fread(cliLido, sizeof(Cliente), 1, fp) && !achou) {
-        if (strcmp(cliLido->cpf, cli->cpf) == 0) {
+        if (strcmp(cliLido->cpfCliente, cli->cpfCliente) == 0) {
 			achou = 1;
 			fseek(fp, -1*sizeof(Cliente), SEEK_CUR);
         fwrite(cli, sizeof(Cliente), 1, fp);
@@ -417,7 +417,7 @@ Cliente* buscarClienteCadastrado(char* cpf) {
     }
     while(!feof(fp)) {
         fread(cli, sizeof(Cliente), 1, fp);
-        if ((strcmp(cli->cpf, cpf) == 0)  && (cli->status == "C")) {
+        if ((strcmp(cli->cpfCliente, cpf) == 0)  && (cli->status == 'C')) {
             fclose(fp);
             return cli;
         }

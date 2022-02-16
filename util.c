@@ -7,9 +7,12 @@
 ///          Developed by @rusdrael and @matheusfaria21 - Out, 2021         ///
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
+#include "util.h"
 
 /////////////////
 // Limpar Tela //
@@ -284,18 +287,18 @@ int validarCpf(char cpf[]) {
 ////////////////////////////
 
 //Criado por @Ana678
-int validarPlacaVeic(char placaVeic[8]){
-if(strlen(placaVeic) == 7){
+int validarPlacaVeic(char placa[8]){
+if(strlen(placa) == 7){
   int valido_2 = 0;
   int valido_3 = 0;
   int valido_6 = 0;
   for(int i=0; i < 3; i++){
-    if(!isdigit(placaVeic[i]) && placaVeic[i] == toupper(placaVeic[i])){
+    if(!ehDigito(placa[i]) && placa[i] == toupper(placa[i])){
       valido_2 += 1;
     }
   }
   if(valido_2 == 3){
-    if(!isdigit(placaVeic[3]) && placaVeic[3] == toupper(placaVeic[3])){
+    if(!ehDigito(placa[3]) && placa[3] == toupper(placa[3])){
       valido_3 += 1;
 
     }else{
@@ -304,7 +307,7 @@ if(strlen(placaVeic) == 7){
   }
   if(valido_3 == 1){
     for(int i=6; i > 4; i--){
-      if(isdigit(placaVeic[i])){
+      if(ehDigito(placa[i])){
         valido_6 += 1;
       }
     }
@@ -383,7 +386,7 @@ else{
 // Validar valor //
 ///////////////////
 
-int validaValor(float valor){
+int validarValor(float valor){
 if (valor < 1.0) {
     return 0;
   }

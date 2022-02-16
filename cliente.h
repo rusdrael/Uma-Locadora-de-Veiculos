@@ -15,7 +15,7 @@ typedef struct cliente Cliente;
 
 struct cliente{
 
-    char cpf[12];
+    char cpfCliente[12];
     char nome[51];
     char email[51];
     char nasc[11];
@@ -48,4 +48,4 @@ void regravarCliente(Cliente*);
 
 void excluirCliente(void);
 char* telaExcluirCliente(void);
-Cliente* buscarClienteCadastro(char*);
+Cliente* buscarClienteCadastrado(char*);

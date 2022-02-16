@@ -45,17 +45,17 @@ void locarVeiculo(void) {
     Cliente *cli;
     char* cpf;
     Veiculos *veic;
-    char* placaVeic;
+    char* placa;
     cpf = telaPesquisarCliente();
     cli = buscarCliente(cpf);
-    placaVeic = telaPesquisarVeiculos();
-    veic = buscarVeiculos(placaVeic);
+    placa = telaPesquisarVeiculos();
+    veic = buscarVeiculos(placa);
     if (cli == NULL || veic == NULL || veic->status != 'D'){
         printf("Dados incorretos!");
         getchar();
     }
     else{
-        loc = telaLocarVeiculo(cli->cpf, veic->placaVeic, veic->valor);
+        loc = telaLocarVeiculo(cli->cpfCliente, veic->placaVeic, veic->valor);
         if (loc==NULL){
         printf("Empréstimo cancelado!");
         getchar();
@@ -69,7 +69,7 @@ void locarVeiculo(void) {
     }
     free(cpf);
     free(cli);
-    free(placaVeic);
+    free(placa);
     free(veic);
     free(loc);
 }
@@ -78,11 +78,11 @@ void devolverVeiculo(void) {
     Locacao *loc;
     Veiculos *veic;
     char* cpf;
-    char* placaVeic;
+    char* placa;
     cpf = telaPesquisarCliente();
-    placaVeic = telaPesquisarVeiculos();
-    veic = buscarVeiculos(placaVeic);
-    loc = buscarLocacao(cpf, placaVeic);
+    placa = telaPesquisarVeiculos();
+    veic = buscarVeiculos(placa);
+    loc = buscarLocacao(cpf, placa);
     if (loc == NULL || loc->status!='N'){
         printf("Locação não encontrada!");
         getchar();
@@ -95,7 +95,7 @@ void devolverVeiculo(void) {
         regravarLocacao(loc);
     }
     free(cpf);
-    free(placaVeic);
+    free(placa);
     free(veic);
     free(loc);
 }
@@ -158,7 +158,7 @@ char telaMenuLocacao(void) {
 }
 
 
-Locacao* telaLocarVeiculo(char* cpf, char* placaVeic, float valor) {
+Locacao* telaLocarVeiculo(char* cpf, char* placa, float valor) {
     char confirmacao[2];
     time_t agora;
     char datahora[100];
@@ -190,8 +190,8 @@ Locacao* telaLocarVeiculo(char* cpf, char* placaVeic, float valor) {
             getchar();
         }
         if(strcmp (confirmacao, "S") == 0 || strcmp (confirmacao, "s") == 0){
-            strcpy(loc->cpf, cpf);
-            strcpy(loc->placaVeic, placaVeic);
+            strcpy(loc->cpfCliente, cpf);
+            strcpy(loc->placaVeic, placa);
             loc->valorPago = valor;
             strcpy(loc->data, datahora);
             loc->status='N';
@@ -237,7 +237,7 @@ Locacao* telaDevolverVeiculo(Locacao* loc) {
     printf("///           = = = = = = = = Devolver Veículo  = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
-    printf("///           CPF: %s\n", loc->cpf);
+    printf("///           CPF: %s\n", loc->cpfCliente);
     printf("///           Placa: %s\n", loc->placaVeic);
     printf("///           Data: %s\n", loc->data);
     dias = difDatas(loc->data) + 1;
@@ -267,9 +267,9 @@ int difDatas( char datahora1[] )
     struct tm tm; 
     int ano, mes; 
     char datahora2[] = "2021.05.14 - 13:10:20";
-    time_t agora;
-    agora = time(NULL);
-    strftime( datahora2, sizeof(datahora2), "%Y.%m.%d - %H:%M:%S", localtime( &agora ) );
+    ///time_t agora;
+    ///agora = time(NULL);
+    ///strftime( datahora2, sizeof(datahora2), "%Y.%m.%d - %H:%M:%S", localtime( &agora ) );
 
     sscanf( datahora1, "%d.%d.%d - %d:%d:%d", &ano, &mes, &tm.tm_mday, &tm.tm_hour, &tm.tm_min, &tm.tm_sec );
 
@@ -289,7 +289,7 @@ int difDatas( char datahora1[] )
     return dias;
 }
 
-Locacao* buscarLocacao(char* cpf, char* placaVeic) {
+Locacao* buscarLocacao(char* cpf, char* placa) {
     FILE* fp;
     Locacao* loc;
 
@@ -300,7 +300,7 @@ Locacao* buscarLocacao(char* cpf, char* placaVeic) {
     }
     while(!feof(fp)) {
         fread(loc, sizeof(Locacao), 1, fp);
-        if ((strcmp(loc->cpf, cpf) == 0)  && (strcmp(loc->placaVeic, placaVeic) == 0) && (loc->status != 'P')) {
+        if ((strcmp(loc->cpfCliente, cpf) == 0)  && (strcmp(loc->placaVeic, placa) == 0) && (loc->status != 'P')) {
             fclose(fp);
             return loc;
         }
@@ -321,7 +321,7 @@ void regravarLocacao(Locacao* loc) {
 	}
 	achou = 0;
 	while(fread(locLido, sizeof(Locacao), 1, fp) && !achou) {
-        if ((strcmp(locLido->cpf, loc->cpf) == 0) && (strcmp(locLido->placaVeic, loc->placaVeic) == 0 && (strcmp(locLido->data, loc->data) == 0) )) {
+        if ((strcmp(locLido->cpfCliente, loc->cpfCliente) == 0) && (strcmp(locLido->placaVeic, loc->placaVeic) == 0 && (strcmp(locLido->data, loc->data) == 0) )) {
 			achou = 1;
 			fseek(fp, -1*sizeof(Locacao), SEEK_CUR);
         fwrite(loc, sizeof(Locacao), 1, fp);
