@@ -11,41 +11,34 @@
 // Estruturas //
 ////////////////
 
-typedef struct cliente Cliente;
-
-struct cliente{
+typedef struct locacao Locacao;
+#include <time.h>
+struct locacao{
 
     char cpf[12];
-    char nome[51];
-    char email[51];
-    char nasc[11];
-    char celular[12];
-    int quantidadeAlugueis;
+    char placaVeic[51];
+    char data[30];
+    float valorPago;
     char status;
 };
 
 //////////////////////////////////////////////
-// Assinatura das Funções do Módulo Cliente //
+// Assinatura das Funções do Módulo Locação //
 //////////////////////////////////////////////
 
-void telaErroArquivo(void);
+void telaErroArquivoLocacao(void);
 
-void moduloCliente(void);
-char telaMenuCliente(void);
+void moduloLocacao(void);
+char telaMenuLocacao(void);
 
-Cliente* telaCadastrarCliente(int);
-void cadastrarCliente(void);
-void gravarCliente(Cliente*);
+void locarVeiculo(void);
+Locacao* telaLocarVeiculo(char*, char*, float);
+void gravarLocacao(Locacao*);
 
-void pesquisarCliente(void);
-char* telaPesquisarCliente(void);
-Cliente* buscarCliente(char*);
-void exibirCliente(Cliente*);
+void devolverVeiculo(void);
+Locacao* telaDevolverVeiculo(Locacao*);
+Locacao* buscarLocacao(char*, char*);
+void regravarLocacao(Locacao*);
 
-void atualizarCliente(void);
-char* telaAtualizarCliente(void);
-void regravarCliente(Cliente*);
-
-void excluirCliente(void);
-char* telaExcluirCliente(void);
-Cliente* buscarClienteCadastro(char*);
+int difDatas( char[] );
+void telaListarVeiculo(void);

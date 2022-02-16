@@ -10,100 +10,108 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "administrador.h"
+#include <ctype.h>
+#include "veiculos.h"
 #include "util.h"
+#include "cliente.h"
 
-/////////////////////////////////////
-// Funções do Módulo Administrador //
-/////////////////////////////////////
+typedef struct veiculos Veiculos;
+
+////////////////////////////////
+// Funções do Módulo Veículos //
+////////////////////////////////
 
 //Inspirado no modelo de @flgorgonio
-void moduloAdministrador(void) {
+void moduloVeiculos(void) {
     char escolha;
     do {
-        escolha = telaMenuAdministrador();
+        escolha = telaMenuVeiculos();
         switch(escolha) {
-            case '1': cadastrarAdministrador();
+            case '1': cadastrarVeiculos();
                                 break;
-            case '2': pesquisarAdministrador();
+            case '2': pesquisarVeiculos();
                                 break;
-            case '3': atualizarAdministrador();
+            case '3': atualizarVeiculos();
                                 break;
-            case '4': excluirAdministrador();
+            case '4': excluirVeiculos();
                                 break;
         }
     } while (escolha != '0');                                                      
 }
 
 
-void cadastrarAdministrador(void) {
-    Administrador* admin;
-    admin = telaCadastrarAdministrador();
-    gravarAdministrador(admin);
-    free(admin);
+void cadastrarVeiculos(void) {
+    Veiculos *veic;
+    veic = telaCadastrarVeiculos(1);
+    if (veic == NULL){
+        printf("Veículo já cadastrado!");
+    }
+    else{
+    gravarVeiculos(veic);
+    free(veic);
+    }
 }
 
-void pesquisarAdministrador(void) {
-    Administrador* admin;
-	char* cpf;
+void pesquisarVeiculos(void) {
+    Veiculos* veic;
+	char* placaVeic;
 
-	cpf = telaPesquisarAdministrador();
-	admin = buscarAdministrador(cpf);
-	exibirAdministrador(admin);
-	free(admin); 
-	free(cpf);
+	placaVeic = telaPesquisarVeiculos();
+	veic = buscarVeiculos(placaVeic);
+	exibirVeiculos(veic);
+	free(veic); 
+	free(placaVeic);
 }
 
-void atualizarAdministrador(void) {
-   Administrador* admin;
-	char* cpf;
+void atualizarVeiculos(void) {
+    Veiculos* veic;
+	char* placaVeic;
 
-	cpf = telaAtualizarAdministrador();
-	admin = buscarAdministrador(cpf);
-	if (admin == NULL) {
-    	printf("\n\nAdministrador não encontrado!\n\n");
+	placaVeic = telaAtualizarVeiculos();
+	veic = buscarVeiculos(placaVeic);
+	if (veic == NULL) {
+    	printf("\n\nVeículo não encontrado!\n\n");
   	} else {
-		  admin = telaCadastrarAdministrador();
-		  strcpy(admin->cpf, cpf);
-		  regravarAdministrador(admin);
-		  free(admin);
+		  veic = telaCadastrarVeiculos(2);
+		  strcpy(veic->placaVeic, placaVeic);
+		  regravarVeiculos(veic);
 	}
-	free(cpf);
+    free(veic);
+	free(placaVeic);
 }
 
-void excluirAdministrador(void) {
-    Administrador* admin;
-	char *cpf;
+void excluirVeiculos(void) {
+    Veiculos* veic;
+	char *placaVeic;
   char confirmacao[2];
-	cpf = telaExcluirAdministrador();
-	admin = (Administrador*) malloc(sizeof(Administrador));
-	admin = buscarAdministrador(cpf);
-	if (admin == NULL) {
-    printf("\n\nAdministrador não encontrado!\n\n");
-  } 
-  else {
-    printf("Digite 's' para continuar a exclusão ou 'n' para interromper: ");
-    scanf("%[^\n]", confirmacao);
-    getchar();
+	placaVeic = telaExcluirVeiculos();
+	veic = (Veiculos*) malloc(sizeof(Veiculos));
+	veic = buscarVeiculos(placaVeic);
+	if (veic == NULL) {
+        printf("\n\nVeículo não encontrado!\n\n");
+    } 
+    else {
+        printf("Digite 's' para continuar a exclusão ou 'n' para interromper: ");
+        scanf("%[^\n]", confirmacao);
+        getchar();
     while (validaConfirmacao(confirmacao) == 0){
-      printf("///           Ação inválida!: ");
-      scanf("%[^\n]", confirmacao);
+        printf("///           Ação inválida!: ");
+        scanf("%[^\n]", confirmacao);
 	    getchar();
     }
     if (confirmacao[0] == 'S' || confirmacao[0] == 's'){
-		  admin->status = 'X';
-		  regravarAdministrador(admin);
-      free(admin);
-		  
+	    veic->statusCadastro = 'X';
+		regravarVeiculos(veic);
+    free(veic);	  
     }
     else if(confirmacao[0] == 'N' || confirmacao[0] == 'n'){
       printf("Ação interrompida!");
     }
 	}
-	free(cpf);
+	free(placaVeic);
 }
 
-void telaErroArquivoAdmin(void) {
+void telaErroArquivoVeic(void) {
 	system("clear||cls");
 	printf("\n");
 	printf("/////////////////////////////////////////////////////////////////////////////\n");
@@ -117,8 +125,8 @@ void telaErroArquivoAdmin(void) {
 	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
 	printf("///           = = = = = = =  Ops! Ocorreu em erro = = = = = =             ///\n");
 	printf("///           = = =  Não foi possível acessar o arquivo = = =             ///\n");
-	printf("///           = = com informações sobre os administradores  =               ///\n");
-	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+	printf("///           = = = = com informações sobre os veículos = = =             ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
 	printf("///           = =  Pedimos desculpas pelos inconvenientes = =             ///\n");
 	printf("///           = = =  mas este programa será finalizado! = = =             ///\n");
 	printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
@@ -130,7 +138,7 @@ void telaErroArquivoAdmin(void) {
 	exit(1);
 }
 
-char telaMenuAdministrador(void) {
+char telaMenuVeiculos(void) {
     char op;
     system("clear||cls");
     printf("\n");
@@ -143,13 +151,13 @@ char telaMenuAdministrador(void) {
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                       ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-    printf("///           = = = = = = = Menu Administrador  = = = = = = =             ///\n");
+    printf("///           = = = = = = = = = Menu Veículos = = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
-    printf("///           1. Cadastrar um novo administrador                          ///\n");
-    printf("///           2. Pesquisar os dados de um administrador                   ///\n");
-    printf("///           3. Atualizar o cadastro de um administrador                 ///\n");
-    printf("///           4. Excluir um administrador do sistema                      ///\n");
+    printf("///           1. Cadastrar um novo veículo                                ///\n");
+    printf("///           2. Pesquisar os dados de um veículo                         ///\n");
+    printf("///           3. Atualizar o cadastro de um veículo                       ///\n");
+    printf("///           4. Excluir um veículo do sistema                            ///\n");
     printf("///           0. Voltar ao menu anterior                                  ///\n");
     printf("///                                                                       ///\n");
     printf("///           Escolha a opção desejada: ");                       
@@ -162,72 +170,9 @@ char telaMenuAdministrador(void) {
 }
 
 
-Administrador* telaCadastrarAdministrador(void) {
-    Administrador* admin;
-        admin = (Administrador*) malloc(sizeof(Administrador));
-
-    system("clear||cls");
-        printf("\n");
-        printf("/////////////////////////////////////////////////////////////////////////////\n");
-        printf("///                                                                       ///\n");
-        printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
-        printf("///                                                                       ///\n");
-        printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
-        printf("///                                                                       ///\n");
-        printf("/////////////////////////////////////////////////////////////////////////////\n");
-        printf("///                                                                       ///\n");
-        printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-        printf("///           = = = = = = Cadastrar Administrador = = = = = =             ///\n");
-        printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-        printf("///                                                                       ///\n");
-    do {
-        printf("///           CPF (apenas números): ");
-        scanf("%[^\n]", admin->cpf);
-        getchar();
-    } while (!validarCpf(admin->cpf));  
-    do {
-        printf("///           Nome completo: ");
-        scanf("%[^\n]", admin->nome);
-        getchar();
-    } while (!validarNome(admin->nome));    
-    do {
-        printf("///           E-mail: ");
-        scanf("%[^\n]", admin->email);
-        getchar(); 
-    } while (!validarEmail(admin->email));   
-    do {
-        printf("///           Data de Nascimento (dd/mm/aaaa):  ");
-        scanf("%[^\n]", admin->nasc);
-        getchar();
-    } while (!validarData(admin->nasc));      
-    do {
-        printf("///           Celular  (apenas números): ");
-        scanf("%[^\n]", admin->celular);
-        getchar();
-    } while (!validarCelular(admin->celular));
-    admin->status = True;
-        printf("///                                                                       ///\n");
-        printf("///                                                                       ///\n");
-        printf("/////////////////////////////////////////////////////////////////////////////\n");
-        printf("\n");
-
-        return admin;
-}
-
-void gravarAdministrador(Administrador* admin) {
-	FILE* fp;
-
-	fp = fopen("administradores.dat", "ab");
-	if (fp == NULL) {
-		telaErroArquivoAdmin();
-	}
-	fwrite(admin, sizeof(Administrador), 1, fp);
-	fclose(fp);
-}
-
-char* telaPesquisarAdministrador(void) {
-    char* cpf;
-        cpf = (char*) malloc(12*sizeof(char));
+Veiculos* telaCadastrarVeiculos(int tipo) {
+    Veiculos* veic;
+        char placaVeic[8];
 
     system("clear||cls");
     printf("\n");
@@ -240,59 +185,155 @@ char* telaPesquisarAdministrador(void) {
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                       ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-    printf("///           = = = = = Pesquisar Administrador = = = = = = =             ///\n");
+    printf("///           = = = = = = = Cadastrar Veículos  = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-    printf("///                                                                       ///\n");
-do {
-    printf("///           Informe o CPF (apenas números): ");
-    scanf("%[^\n]", cpf);
+    printf("///                                                                       ///\n");   
+    printf("///           Placa (Apenas números e letras maiúsculas): ");
+    scanf("%[^\n]", placaVeic);
     getchar();
-} while (!validarCpf(cpf));      
+    while (validarPlacaVeic(placaVeic) == 0){
+        printf("///       Placa inválida!: ");
+        scanf("%[^\n]", placaVeic);
+        getchar();
+    }
+    if((buscarVeiculosCadastro(placaVeic) !=NULL) && (tipo == 1) ){
+        return NULL;
+        free(veic);
+    }
+    else{
+        veic = (Veiculos*) malloc(sizeof(Veiculos));
+        strcpy(veic->placaVeic, placaVeic);
+            printf("///           Nome:");
+        scanf("%[^\n]", veic->nomeVeic);
+        getchar();
+        while (validarNomeVeic(veic->nomeVeic) == 0){
+            printf("///           Nome inválido!: ");
+            scanf("%[^\n]", veic->nomeVeic);
+            getchar();  
+        }        
+            printf("///           Marca: ");
+        scanf("%[^\n]", veic->marcaVeic);
+        getchar();
+        while (validarMarcaVeic(veic->marcaVeic) == 0){         
+            printf("///           Marca inválida!: ");
+            scanf("%[^\n]", veic->marcaVeic);
+            getchar();
+        }
+            printf("///           Ano: ");
+        scanf("%[^\n]", veic->anoVeic);
+        getchar();
+        while (!validarAnoVeic(veic->anoVeic) == 0){
+            printf("///           Ano inválido!: ");
+            scanf("%[^\n]", veic->anoVeic);
+            getchar();
+        }
+            printf("///           Valor do aluguel: ");
+        scanf("%f", &veic->valor);
+        getchar();
+        while (validarValor(veic->valor) == 0){
+            printf("///           Valor inválido!: ");
+            scanf("%f", &veic->valor);
+	        getchar();
+        }
+        veic->status = 'D';
+        veic->quantidadeAlugueis = 0;
+        veic->statusCadastro = 'C';      
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
 
-    return cpf;
+    return veic;
+    }
 }
 
-Administrador* buscarAdministrador(char* cpf) {
-    FILE* fp;
-    Administrador* admin;
+void gravarVeiculos(Veiculos* veic) {
+	FILE* fp;
 
-    admin = (Administrador*) malloc(sizeof(Administrador));
-    fp = fopen("administradores.dat", "rb");
+	fp = fopen("veiculos.dat", "ab");
+	if (fp == NULL) {
+		telaErroArquivoVeic();
+	}
+	fwrite(veic, sizeof(Veiculos), 1, fp);
+	fclose(fp);
+}
+
+char* telaPesquisarVeiculos(void) {
+    char* placaVeic;
+        placaVeic = (char*) malloc(8*sizeof(char));
+
+    system("clear||cls");
+    printf("\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+    printf("///                                                                       ///\n");
+    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///           = = = = = = = Pesquisar Veículos  = = = = = = =             ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///                                                                       ///\n");
+do {
+    printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
+    scanf("%[^\n]", placaVeic);
+    getchar();
+} while (!validarPlacaVeic(placaVeic));
+    printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("\n");
+
+    return placaVeic;
+}
+
+Veiculos* buscarVeiculos(char* placaVeic) {
+    FILE* fp;
+    Veiculos* veic;
+
+    veic = (Veiculos*) malloc(sizeof(Veiculos));
+    fp = fopen("veiculos.dat", "rb");
     if (fp == NULL) {
-        telaErroArquivoAdmin();
+        telaErroArquivoVeic();
     }
-    while(fread(admin, sizeof(Administrador), 1, fp)) {
-        if ((strcmp(admin->cpf, cpf) == 0)  && (admin->status == True)) {
+    while(!feof(fp)) {
+        fread(veic, sizeof(Veiculos), 1, fp);
+        if ((strcmp(veic->placaVeic, placaVeic) == 0)  && (veic->statusCadastro == "C")) {
             fclose(fp);
-            return admin;
+            return veic;
         }
     }
     fclose(fp);
     return NULL;
 }
 
-void exibirAdministrador(Administrador* admin) {
+void exibirVeiculos(Veiculos* veic) {
 
-    if (admin == NULL) {
-        printf("\n= = = Administrador Inexistente = = =\n");
+    if (veic == NULL) {
+        printf("\n= = = Veículo Inexistente = = =\n");
     } else {
-        printf("\n= = = Administrador Cadastrado = = =\n");
-        printf("CPF: %s\n", admin->cpf);
-        printf("Nome do administrador: %s\n", admin->nome);
-        printf("E-mail: %s\n", admin->email);
-        printf("Celular: %s\n", admin->celular);
-        printf("Status: %i\n", admin->status);
+        printf("\n= = = Veículo Cadastrado = = =\n");
+        printf("Placa do veículo: %s\n", veic->placaVeic);
+        printf("Nome do veículo: %s\n", veic->nomeVeic);
+        printf("Marca do veículo: %s\n", veic->marcaVeic);
+        printf("Ano do veículo: %s\n", veic->anoVeic);
+        printf("Valor: %.2f\n", veic->valor);
+        printf("Quantidade de Aluguéis; %i\n", veic->quantidadeAlugueis);
+        if(veic->status == 'D'){
+            printf("Disponível\n");
+        }
+        else{
+            printf("Alugado\n");
+        }
     }
     getchar();
 }
 
-char* telaAtualizarAdministrador(void) {
-    char* cpf;
-        cpf = (char*) malloc(12*sizeof(char));
+char* telaAtualizarVeiculos(void) {
+    char* placaVeic;
+        placaVeic = (char*) malloc(8*sizeof(char));
 
     system("clear||cls");
     printf("\n");
@@ -305,47 +346,47 @@ char* telaAtualizarAdministrador(void) {
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                       ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-    printf("///           = = = = = = Atualizar Administrador = = = = = =             ///\n");
+    printf("///           = = = = = = = Atualizar Veículos  = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
-do {  
-    printf("///           Informe o CPF (apenas números): ");
-    scanf("%[^\n]", cpf);
+do {
+    printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
+    scanf("%[^\n]", placaVeic);
     getchar();
-} while (!validarCpf(cpf));      
+} while (!validarPlacaVeic(placaVeic));
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
 
-    return cpf;
+    return placaVeic;
 }
 
-void regravarAdministrador(Administrador* admin) {
+void regravarVeiculos(Veiculos* veic) {
 	int achou;
 	FILE* fp;
-	Administrador* adminLido;
+	Veiculos* veicLido;
 
-	adminLido = (Administrador*) malloc(sizeof(Administrador));
-	fp = fopen("administradores.dat", "r+b");
+	veicLido = (Veiculos*) malloc(sizeof(Veiculos));
+	fp = fopen("veiculos.dat", "r+b");
 	if (fp == NULL) {
-		telaErroArquivoAdmin();
+		telaErroArquivoVeic();
 	}
-	achou = False;
-	while(fread(adminLido, sizeof(Administrador), 1, fp) && !achou) {
-        if (strcmp(adminLido->cpf, admin->cpf) == 0) {
+	achou = 0;
+	while(fread(veicLido, sizeof(Veiculos), 1, fp) && !achou) {
+        if (strcmp(veicLido->placaVeic, veic->placaVeic) == 0) {
 			achou = 1;
-			fseek(fp, -1*sizeof(Administrador), SEEK_CUR);
-        fwrite(admin, sizeof(Administrador), 1, fp);
+			fseek(fp, -1*sizeof(Veiculos), SEEK_CUR);
+        fwrite(veic, sizeof(Veiculos), 1, fp);
 		}
 	}
 	fclose(fp);
-	free(adminLido);
+	free(veicLido);
 }
 
-char* telaExcluirAdministrador(void) {
-    char *cpf;
-        cpf = (char*) malloc(12*sizeof(char));
+char* telaExcluirVeiculos(void) {
+    char *placaVeic;
+        placaVeic = (char*) malloc(8*sizeof(char));
     
     system("clear||cls");
     printf("\n");
@@ -358,18 +399,38 @@ char* telaExcluirAdministrador(void) {
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("///                                                                       ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-    printf("///           = = = = = = Excluir Administrador = = = = = = =             ///\n");
+    printf("///           = = = = = = = = Excluir Veículos  = = = = = = =             ///\n");
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
-do {    
-    printf("///           Informe o CPF (apenas números): ");
-    scanf("%[^\n]", cpf);
+do {
+    printf("///           Informe a placa (Apenas números e letras maiúsculas): ");
+    scanf("%[^\n]", placaVeic);
     getchar();
-} while (!validarCpf(cpf));      
+} while (!validarPlacaVeic(placaVeic));
     printf("///                                                                       ///\n");
     printf("///                                                                       ///\n");
     printf("/////////////////////////////////////////////////////////////////////////////\n");
     printf("\n");
 
-    return cpf;
+    return placaVeic;
+}
+
+Veiculos* buscarVeiculosCadastro(char* placaVeic) {
+  FILE* fp;
+  Veiculos* veic;
+
+  veic = (Veiculos*) malloc(sizeof(Veiculos));
+  fp = fopen("veiculos.dat", "rb");
+  if (fp == NULL) {
+    return NULL;
+  }
+  while(!feof(fp)) {
+    fread(veic, sizeof(Veiculos), 1, fp);
+    if (strcmp(veic->placaVeic, placaVeic) == 0  && (veic->statusCadastro == 'C')) {
+      fclose(fp);
+      return veic;
+    }
+  }
+  fclose(fp);
+  return NULL;
 }

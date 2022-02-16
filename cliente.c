@@ -13,6 +13,8 @@
 #include "cliente.h"
 #include "util.h"
 
+typedef struct cliente Cliente;
+
 ///////////////////////////////
 // Funções do Módulo Cliente //
 ///////////////////////////////
@@ -38,9 +40,14 @@ void moduloCliente(void) {
 
 void cadastrarCliente(void) {
     Cliente* cli;
-    cli = telaCadastrarCliente();
-    gravarCliente(cli);
-    free(cli);
+    cli = telaCadastrarCliente(1);
+    if (cli == NULL){
+        printf("Cliente já cadastrado!");
+    }
+    else{
+        gravarCliente(cli);
+        free(cli);
+    }
 }
 
 void pesquisarCliente(void) {
@@ -63,7 +70,7 @@ void atualizarCliente(void) {
 	if (cli == NULL) {
     	printf("\n\nCliente não encontrado!\n\n");
   	} else {
-		  cli = telaCadastrarCliente();
+		  cli = telaCadastrarCliente(2);
 		  strcpy(cli->cpf, cpf);
 		  regravarCliente(cli);
 		  free(cli);
@@ -162,56 +169,80 @@ char telaMenuCliente(void) {
 }
 
 
-Cliente* telaCadastrarCliente(void) {
+Cliente* telaCadastrarCliente(int tipo) {
     Cliente* cli;
-        cli = (Cliente*) malloc(sizeof(Cliente));
+    char cpf[12];
     
     system("clear||cls");
-        printf("\n");
-        printf("/////////////////////////////////////////////////////////////////////////////\n");
-        printf("///                                                                       ///\n");
-        printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
-        printf("///                                                                       ///\n");
-        printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
-        printf("///                                                                       ///\n");
-        printf("/////////////////////////////////////////////////////////////////////////////\n");
-        printf("///                                                                       ///\n");
-        printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-        printf("///           = = = = = = = = Cadastrar Cliente = = = = = = =             ///\n");
-        printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
-        printf("///                                                                       ///\n");
-    do {
-        printf("///           CPF (apenas números): ");
-        scanf("%[^\n]", cli->cpf);
+    printf("\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+    printf("///                                                                       ///\n");
+    printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("///                                                                       ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///           = = = = = = = = Cadastrar Cliente = = = = = = =             ///\n");
+    printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+    printf("///                                                                       ///\n");
+    printf("///           CPF (apenas números): ");
+    scanf("%[^\n]", cpf);
+    getchar();
+    while (validarCpf(cpf) == 0){
+        printf("///           CPF inválido!: ");
+        scanf("%[^\n]", cpf);
         getchar();
-    } while (!validarCpf(cli->cpf));
-    do {
-        printf("///           Nome completo: ");
+    } 
+    if((buscarClienteCadastro(cpf) !=NULL) && (tipo == 1) ){
+        return NULL;
+        free(cli);
+    }
+    else{
+        cli = (Cliente*) malloc(sizeof(Cliente));
+        strcpy(cli->cpf, cpf);
+            printf("///           Nome:");
         scanf("%[^\n]", cli->nome);
         getchar();
-    } while (!validarNome(cli->nome)); 
-    do {
-        printf("///           E-mail: ");
+        while (validarNome(cli->nome) == 0){
+            printf("///           Nome inválido!: ");
+            scanf("%[^\n]", cli->nome);
+            getchar();  
+        }        
+            printf("///           E-mail: ");
         scanf("%[^\n]", cli->email);
         getchar();
-    } while (!validarEmail(cli->email));
-    do {
-        printf("///           Data de Nascimento (dd/mm/aaaa):  ");
+        while (validarEmail(cli->email) == 0){
+            printf("///           E-mail inválido!:  ");
+            scanf("%[^\n]", cli->email);
+            getchar();
+        }
+            printf("///           Data de nascimento (dd/mm/aaaa):  ");
         scanf("%[^\n]", cli->nasc);
         getchar();
-    } while (!validarData(cli->nasc));  
-    do {
-        printf("///           Celular  (apenas números): ");
+        while (!validarData(cli->nasc) == 0){  
+            printf("///           Data de nascimento inválida!:  ");
+            scanf("%[^\n]", cli->nasc);
+            getchar();
+        }
+            printf("///           Celular  (apenas números): ");
         scanf("%[^\n]", cli->celular);
         getchar();
-    } while (!validarCelular(cli->celular));
-    cli->status = True;
-        printf("///                                                                       ///\n");
-        printf("///                                                                       ///\n");
-        printf("/////////////////////////////////////////////////////////////////////////////\n");
-        printf("\n");
+        while (!validarCelular(cli->celular) == 0){
+            printf("///           Celular inválido!:  ");
+            scanf("%[^\n]", cli->celular);
+            getchar();
+        }
+        cli->status = 'C';
+        cli->quantidadeAlugueis = 0;
+    printf("///                                                                       ///\n");
+    printf("///                                                                       ///\n");
+    printf("/////////////////////////////////////////////////////////////////////////////\n");
+    printf("\n");
 
-        return cli;
+    return cli;
+    }
 }
 
 void gravarCliente(Cliente* cli) {
@@ -265,8 +296,9 @@ Cliente* buscarCliente(char* cpf) {
     if (fp == NULL) {
         telaErroArquivo();
     }
-    while(fread(cli, sizeof(Cliente), 1, fp)) {
-        if ((strcmp(cli->cpf, cpf) == 0)  && (cli->status == True)) {
+    while(!feof(fp)) {
+        fread(cli, sizeof(Cliente), 1, fp);
+        if ((strcmp(cli->cpf, cpf) == 0)  && (cli->status == "C")) {
             fclose(fp);
             return cli;
         }
@@ -285,7 +317,7 @@ void exibirCliente(Cliente* cli) {
         printf("Nome do cliente: %s\n", cli->nome);
         printf("E-mail: %s\n", cli->email);
         printf("Celular: %s\n", cli->celular);
-        printf("Status: %i\n", cli->status);
+        printf("Quantidade de aluguéis: %i\n", cli->quantidadeAlugueis);
     }
     getchar();
 }
@@ -331,7 +363,7 @@ void regravarCliente(Cliente* cli) {
 	if (fp == NULL) {
 		telaErroArquivo();
 	}
-	achou = False;
+	achou = 0;
 	while(fread(cliLido, sizeof(Cliente), 1, fp) && !achou) {
         if (strcmp(cliLido->cpf, cli->cpf) == 0) {
 			achou = 1;
@@ -372,4 +404,24 @@ do {
     printf("\n");
 
     return cpf;
+}
+
+Cliente* buscarClienteCadastrado(char* cpf) {
+    FILE* fp;
+    Cliente* cli;
+
+    cli = (Cliente*) malloc(sizeof(Cliente));
+    fp = fopen("clientes.dat", "rb");
+    if (fp == NULL) {
+        return NULL;
+    }
+    while(!feof(fp)) {
+        fread(cli, sizeof(Cliente), 1, fp);
+        if ((strcmp(cli->cpf, cpf) == 0)  && (cli->status == "C")) {
+            fclose(fp);
+            return cli;
+        }
+    }
+    fclose(fp);
+    return NULL;
 }

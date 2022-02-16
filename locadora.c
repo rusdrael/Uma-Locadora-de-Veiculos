@@ -10,9 +10,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "cliente.h"
-#include "administrador.h"
-#include "disponiveis.h"
-#include "alugados.h"
+#include "veiculos.h"
+#include "locacao.h"
+#include "relatorios.h"
 #include "info.h"
 
 ////////////////////////////
@@ -33,15 +33,13 @@ int main(void) {
         switch(escolha) {
             case '1': moduloCliente();
                                 break;
-            case '2': moduloAdministrador();
+            case '2': moduloVeiculos();
                                 break;
-            case '3': moduloVeiculosDisp();
+            case '3': moduloLocacao();
                                 break;
-            case '4': moduloVeiculosAlug();
+            case '4': moduloRelatorios(); 
                                 break;
-            case '5': //moduloRelatorios(); 
-                                break;
-            case '6': moduloInfo(); 
+            case '5': moduloInfo(); 
                                 break;
         }
     } while (escolha != '0');                                                      
@@ -70,11 +68,10 @@ char telaPrincipal(void) {
     printf("///            = = = = = Locadora de Veículos RM = = = = =                  ///\n");
     printf("///                                                                         ///\n");
     printf("///            1. Módulo Cliente                                            ///\n");
-    printf("///            2. Módulo Administrador                                      ///\n");
-    printf("///            3. Módulo Veículos Disponíveis                               ///\n");
-    printf("///            4. Módulo Veículos Alugados                                  ///\n");
-    printf("///            5. Módulo Relatórios                                         ///\n");
-    printf("///            6. Módulo Informações                                        ///\n");
+    printf("///            2. Módulo Veículos                                           ///\n");
+    printf("///            3. Módulo Locação                                            ///\n");
+    printf("///            4. Módulo Relatórios                                         ///\n");
+    printf("///            5. Módulo Informações                                        ///\n");
     printf("///            0. Sair                                                      ///\n");
     printf("///                                                                         ///\n");
     printf("///            Escolha a opção desejada: ");

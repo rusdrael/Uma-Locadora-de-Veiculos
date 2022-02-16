@@ -378,3 +378,14 @@ else{
   return 0;
 }
 }
+
+///////////////////
+// Validar valor //
+///////////////////
+
+int validaValor(float valor){
+if (valor < 1.0) {
+    return 0;
+  }
+return 1;
+}
