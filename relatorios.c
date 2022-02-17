@@ -141,10 +141,10 @@ void listaHistoricoLocacoes(void) {
     loc = (Locacao*) malloc(sizeof(Locacao));
     fp = fopen("locacoes.dat", "rb");
     while (fread(loc, sizeof(Locacao), 1, fp)) {
-      printf("///           Data: %s                                                    ///\n", loc->data);
-      printf("///           CPF: %s                                                     ///\n", loc->cpfCliente);
-      printf("///           Placa do veículo: %s                                        ///\n", loc->placaVeic);
-      printf("///           Valor: %.2f                                                 ///\n", loc->valorPago);
+      printf("///           Data: %s                                                    \n", loc->data);
+      printf("///           CPF: %s                                                     \n", loc->cpfCliente);
+      printf("///           Placa do veículo: %s                                        \n", loc->placaVeic);
+      printf("///           Valor: %.2f                                                 \n", loc->valorPago);
       if (loc->status == 'N'){
         printf("///           Pagamento pendente                                          ///\n -----------------------------------------------------------------------------\n");
       }  
@@ -163,12 +163,12 @@ void listaClientesCadastrados(void) {
     fp = fopen("clientes.dat", "rb");
     while (fread(cli, sizeof(Cliente), 1, fp)) {
       if(cli->status == 'C'){
-        printf("///           CPF: %s                                                     ///\n", cli->cpfCliente);
-        printf("///           Nome: %s                                                    ///\n", cli->nome);
-        printf("///           Email: %s                                                   ///\n", cli->email);
-        printf("///           Data de Nascimento: %s                                      ///\n", cli->nasc);
-        printf("///           Telefone: %s                                                ///\n", cli->celular);
-        printf("///           Qtd. de Aluguéis: %i                                        ///\n", cli->quantidadeAlugueis);
+        printf("///           CPF: %s                                                     \n", cli->cpfCliente);
+        printf("///           Nome: %s                                                    \n", cli->nome);
+        printf("///           Email: %s                                                   \n", cli->email);
+        printf("///           Data de Nascimento: %s                                      \n", cli->nasc);
+        printf("///           Telefone: %s                                                \n", cli->celular);
+        printf("///           Qtd. de Aluguéis: %i                                        \n", cli->quantidadeAlugueis);
         printf("-----------------------------------------------------------------------------\n");
       }     
     }
@@ -207,12 +207,12 @@ void listaVeiculosCadastrados(void) {
     fp = fopen("veiculos.dat", "rb");
     while (fread(veic, sizeof(Veiculos), 1, fp)) {
       if(veic->statusCadastro == 'C'){
-        printf("///           Placa do Veículo: %s                                        ///\n", veic->placaVeic);
-        printf("///           Nome do Veículo: %s                                         ///\n", veic->nomeVeic);
-        printf("///           Marca do Veículo: %s                                        ///\n", veic->marcaVeic);
-        printf("///           Ano do Veículo: %s                                          ///\n", veic->anoVeic);
-        printf("///           Valor: %.2f                                                 ///\n", veic->valor);
-        printf("///           Qtd. de Aluguéis: %i                                        ///\n", veic->quantidadeAlugueis);
+        printf("///           Placa do Veículo: %s                                        \n", veic->placaVeic);
+        printf("///           Nome do Veículo: %s                                         \n", veic->nomeVeic);
+        printf("///           Marca do Veículo: %s                                        \n", veic->marcaVeic);
+        printf("///           Ano do Veículo: %s                                          \n", veic->anoVeic);
+        printf("///           Valor: %.2f                                                 \n", veic->valor);
+        printf("///           Qtd. de Aluguéis: %i                                        \n", veic->quantidadeAlugueis);
         if (veic->status == 'D'){
           printf("///           Disponível                                                  ///\n -----------------------------------------------------------------------------\n");
         }  
@@ -280,9 +280,9 @@ void listaLocacoesPorCPF(char* cpf) {
     fp = fopen("locacoes.dat", "rb");
     while (fread(loc, sizeof(Locacao), 1, fp)) {
       if(strcmp(loc->cpfCliente, cpf) == 0){
-        printf("///           Data: %s                                                    ///\n", loc->data);
-        printf("///           Placa do Veículo: %s                                        ///\n", loc->placaVeic);
-        printf("///           Valor: %.2f                                                 ///\n", loc->valorPago);
+        printf("///           Data: %s                                                    \n", loc->data);
+        printf("///           Placa do Veículo: %s                                        \n", loc->placaVeic);
+        printf("///           Valor: %.2f                                                 \n", loc->valorPago);
         if (loc->status == 'N'){
           printf("///           Pagamento pendente                                          ///\n -----------------------------------------------------------------------------\n");
         }  
@@ -326,9 +326,9 @@ void listaLocacoesPorPlaca(char* placa) {
     fp = fopen("locacoes.dat", "rb");
     while (fread(loc, sizeof(Locacao), 1, fp)) {
       if(strcmp(loc->placaVeic, placa) == 0){
-        printf("///           Data: %s                                                    ///\n", loc->data);
-        printf("///           CPF: %s                                                     ///\n", loc->cpfCliente);
-        printf("///           Valor: %.2f                                                 ///\n", loc->valorPago);
+        printf("///           Data: %s                                                    \n", loc->data);
+        printf("///           CPF: %s                                                     \n", loc->cpfCliente);
+        printf("///           Valor: %.2f                                                 \n", loc->valorPago);
         if (loc->status == 'N'){
           printf("///           Pagamento pendente                                          ///\n -----------------------------------------------------------------------------\n");
         }  
@@ -372,12 +372,12 @@ void listaVeiculosDisponiveis(void) {
     fp = fopen("veiculos.dat", "rb");
     while (fread(veic, sizeof(Veiculos), 1, fp)) {
       if(veic->status == 'D' && veic->statusCadastro == 'C'){
-        printf("///           Placa do Veículo: %s                                        ///\n", veic->placaVeic);
-        printf("///           Nome do Veículo: %s                                         ///\n", veic->nomeVeic);
-        printf("///           Marca do Veículo: %s                                        ///\n", veic->marcaVeic);
-        printf("///           Ano do Veículo: %s                                          ///\n", veic->anoVeic);
-        printf("///           Valor: %.2f                                                 ///\n", veic->valor);
-        printf("///           Qtd. de Aluguéis: %i                                        ///\n", veic->quantidadeAlugueis);
+        printf("///           Placa do Veículo: %s                                        \n", veic->placaVeic);
+        printf("///           Nome do Veículo: %s                                         \n", veic->nomeVeic);
+        printf("///           Marca do Veículo: %s                                        \n", veic->marcaVeic);
+        printf("///           Ano do Veículo: %s                                          \n", veic->anoVeic);
+        printf("///           Valor: %.2f                                                 \n", veic->valor);
+        printf("///           Qtd. de Aluguéis: %i                                        \n", veic->quantidadeAlugueis);
         if (veic->status == 'D'){
           printf("///           Disponível                                                  ///\n -----------------------------------------------------------------------------\n");
         }  
