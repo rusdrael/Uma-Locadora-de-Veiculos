@@ -20,6 +20,7 @@ struct locacao{
     char data[30];
     float valorPago;
     char status;
+    struct locacao *prox;
 };
 
 //////////////////////////////////////////////
@@ -42,3 +43,6 @@ void regravarLocacao(Locacao*);
 
 int difDatas( char[] );
 void telaListarVeiculo(void);
+
+void gerarRelatorio(Locacao **);
+void exibirLista(Locacao*);

@@ -22,23 +22,32 @@
 //////////////////////////////////
 
 //Inspirado no modelo de @flgorgonio
-void moduloRelatorios(void) {
+int moduloRelatorios(void) {
     char escolha;
+    //Locacao *loc;
+    Locacao *lista;
+
+    lista = NULL;
     do {
         escolha = telaMenuRelatorios();
         switch(escolha) {
             case '1': historicoLocacoes();
                                 break;
-            case '2': clientesCadastrados();
+            case '2': gerarRelatorio(&lista);
+                      exibirLista(lista);
                                 break;
-            case '3': veiculosCadastrados();
+            case '3': clientesCadastrados();
                                 break;
-            case '4': locacoesPorCPF();
+            case '4': veiculosCadastrados();
                                 break;
-            case '5': locacoesPorPlaca();
-                                break;                    
+            case '5': locacoesPorCPF();
+                                break;
+            case '6': locacoesPorPlaca();
+                                break;                  
         }
-    } while (escolha != '0');                                                      
+    } while (escolha != '0');    
+
+    return 0;                                                  
 }
 
 void historicoLocacoes(void) {
@@ -96,10 +105,11 @@ char telaMenuRelatorios(void) {
     printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
     printf("///                                                                       ///\n");
     printf("///           1. Histórico de locações                                    ///\n");
-    printf("///           2. Clientes cadastrados                                     ///\n");
-    printf("///           3. Veículos cadastrados                                     ///\n");
-    printf("///           4. Locações por CPF                                         ///\n");
-    printf("///           5. Locações por Placa                                       ///\n");
+    printf("///           2. Histórico de locações por data                           ///\n");
+    printf("///           3. Clientes cadastrados                                     ///\n");
+    printf("///           4. Veículos cadastrados                                     ///\n");
+    printf("///           5. Locações por CPF                                         ///\n");
+    printf("///           6. Locações por Placa                                       ///\n");
     printf("///           0. Voltar ao menu anterior                                  ///\n");
     printf("///                                                                       ///\n");
     printf("///           Escolha a opção desejada: ");                       
@@ -222,7 +232,7 @@ void listaVeiculosCadastrados(void) {
       }     
     }
     fclose(fp);
-    ///free(veic);
+    free(veic);
 }
 
 void telaVeiculosCadastrados(void) {
@@ -388,4 +398,68 @@ void listaVeiculosDisponiveis(void) {
     }
     fclose(fp);
     free(veic);
+}
+
+
+//Criado por @flgorgonio
+void gerarRelatorio(Locacao **lista)
+{
+    FILE *fp;
+    Locacao *loc;
+    
+    *lista = NULL;
+    fp = fopen("locacoes.dat","rb");
+  
+    
+   	loc = (Locacao *) malloc(sizeof(Locacao));
+   	while (fread(loc, sizeof(Locacao), 1, fp))
+   	{
+      if ((*lista == NULL) || (strcmp(loc->data, (*lista)->data) < 0)) {
+        loc->prox = *lista;
+        *lista = loc;
+      } else  {
+        Locacao* ant = *lista;
+        Locacao* atu = (*lista)->prox;
+        while ((atu != NULL) && (strcmp(atu->data, loc->data) < 0)) {
+          ant = atu;
+          atu = atu->prox;
+        }
+        ant->prox = loc;
+        loc->prox = atu;
+      }
+      loc = (Locacao *) malloc(sizeof(Locacao));
+   	}
+   	free(loc);
+   	fclose(fp);   
+}
+
+void exibirLista(Locacao *aux)
+{
+  printf("\n\n");
+  printf("/////////////////////////////////////////////////////////////////////////////\n");
+  printf("///                                                                       ///\n");
+  printf("///          = = = = = = Locadora de Veículos RM = = = = = =              ///\n");
+  printf("///                                                                       ///\n");
+  printf("///          Developed by  @rusdrael and @matheusfaria21 - Out, 2021      ///\n");
+  printf("///                                                                       ///\n");
+  printf("/////////////////////////////////////////////////////////////////////////////\n");
+  printf("///                                                                       ///\n");
+  printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+  printf("///           = = = = = = Histórico de Locações Data  = = = =             ///\n");
+  printf("///           = = = = = = = = = = = = = = = = = = = = = = = =             ///\n");
+  printf("///                                                                       ///\n");
+  printf("///           Histórico de locações data:                                 ///\n");
+	while (aux != NULL)
+	{
+      printf("-------------------------------------------------------------------------\n");    
+    	printf("///           Data: %s                                                    \n", aux->data);
+      printf("///           CPF: %s                                                     \n", aux->cpfCliente);
+      printf("///           Placa do veículo: %s                                        \n", aux->placaVeic);
+      printf("///           Valor: %.2f                                                 \n", aux->valorPago);
+    	aux = aux->prox;
+	}
+  printf("///                                                                       ///\n");
+  printf("///                                                                       ///\n");
+  printf("/////////////////////////////////////////////////////////////////////////////\n");
+  getchar();
 }

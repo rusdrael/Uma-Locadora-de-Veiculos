@@ -13,7 +13,7 @@
 
 void telaErroArquivoRelat(void);
 
-void moduloRelatorios(void);
+int moduloRelatorios(void);
 char telaMenuRelatorios(void);
 
 void telaHistoricoLocacoes(void);
